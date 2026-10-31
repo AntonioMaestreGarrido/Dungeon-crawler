@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Mazmorra de dados</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500;700&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: tablero de piedra a la izquierda, hojas de personaje y bolsa a la derecha; en móvil se apilan. Un solo aspecto oscuro de mazmorra, a propósito. */
+:root{
+  --stone:#1b1a1f; --stone-2:#24232a; --stone-3:#302e37; --line:#45424f;
+  --fg:#e9e4d8; --muted:#a49e92; --torch:#e0a64a;
+  --red:#d2493f; --green:#4fa364; --yellow:#e2c044; --purple:#9a68d1; --black:#0c0c0e;
+  --hero:#5b9bd5; --foe:#d2493f;
+  --display:"Alegreya SC", Georgia, serif; --body:"Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+html,body{background:var(--stone);color:var(--fg)}
+body{font-family:var(--body);font-size:15px;line-height:1.45;padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:.02em}
+h1{font-size:1.7rem;color:var(--torch)}
+h2{font-size:1.1rem}
+h3{font-size:1rem}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--torch);outline-offset:2px}
+.top{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;justify-content:space-between;max-width:1200px;margin:0 auto 14px}
+.turn{font-family:var(--display);font-size:1.05rem}
+.turn b.h{color:var(--hero)} .turn b.f{color:var(--foe)}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:20px;max-width:1200px;margin:0 auto}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.boardbox{min-width:0}
+.board{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;background:var(--line);border:2px solid var(--line);border-radius:6px;aspect-ratio:1;max-width:100%;width:min(100%,640px)}
+.cell{background:var(--stone-2);border:0;padding:0;position:relative;display:grid;place-items:center;min-width:0;aspect-ratio:1}
+.cell:nth-child(odd){background:#211f26}
+.cell.hl{background:color-mix(in srgb,var(--yellow) 28%,var(--stone-2))}
+.cell.tgt{background:color-mix(in srgb,var(--red) 35%,var(--stone-2))}
+.tok{width:78%;height:78%;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:clamp(.7rem,2.4vw,1.1rem);color:#fff;border:2px solid transparent;position:relative}
+.tok.h{background:var(--hero)} .tok.f{background:var(--foe)}
+.tok.sel{border-color:var(--torch);box-shadow:0 0 0 3px color-mix(in srgb,var(--torch) 40%,transparent)}
+.tok small{position:absolute;bottom:-4px;right:-6px;background:var(--stone);border:1px solid var(--line);border-radius:8px;font-family:var(--body);font-size:.62rem;padding:0 4px;color:var(--fg)}
+.coords{color:var(--muted);font-size:.8rem;margin-top:6px}
+.panel{display:flex;flex-direction:column;gap:14px;min-width:0}
+.box{background:var(--stone-2);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.btn{background:var(--stone-3);border:1px solid var(--line);border-radius:6px;padding:6px 12px}
+.btn.primary{background:var(--torch);color:#1b1a1f;border-color:var(--torch);font-weight:700}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.die{width:30px;height:30px;border-radius:6px;border:2px solid transparent;display:inline-grid;place-items:center;font-weight:700;color:#141317;font-variant-numeric:tabular-nums;padding:0}
+.die.r{background:var(--red)} .die.g{background:var(--green)} .die.y{background:var(--yellow)} .die.p{background:var(--purple)} .die.k{background:var(--black);color:var(--fg);border-color:var(--line)}
+.die.sel{border-color:var(--fg);transform:translateY(-2px);box-shadow:0 2px 0 var(--torch)}
+.die.used{opacity:.35;text-decoration:line-through}
+.slot{width:30px;height:30px;border-radius:6px;border:1px dashed var(--line);display:inline-block}
+.bagline{display:flex;flex-wrap:wrap;gap:10px;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem}
+.bagline span b{color:var(--fg)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.sheets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:420px){.sheets{grid-template-columns:1fr}}
+.sheet{background:var(--stone-3);border:1px solid var(--line);border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:4px;text-align:left;min-width:0}
+.sheet.sel{border-color:var(--torch)}
+.sheet.ko{opacity:.45}
+.sheet .nm{display:flex;justify-content:space-between;gap:6px;font-weight:700}
+.sheet .nm .hp{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500}
+.srow{display:flex;gap:3px;align-items:center;flex-wrap:wrap}
+.srow .lab{width:22px;font-size:.7rem;letter-spacing:.06em;color:var(--muted)}
+.sheet .die,.sheet .slot{width:24px;height:24px;font-size:.8rem}
+.hpbar{height:4px;background:var(--stone);border-radius:2px;overflow:hidden}
+.hpbar i{display:block;height:100%;background:var(--green)}
+.hint{color:var(--torch);font-size:.92rem;min-height:1.3em}
+.log{max-height:180px;overflow:auto;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.log div:first-child{color:var(--fg)}
+.parry{border-color:var(--torch)}
+.pair{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.legend{font-size:.82rem;color:var(--muted)}
+.win{font-family:var(--display);font-size:1.3rem;color:var(--torch)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="top">
+  <h1>Mazmorra de dados</h1>
+  <div class="turn" id="turn"></div>
+</div>
+<div class="wrap">
+  <div class="boardbox">
+    <div class="board" id="board" aria-label="Tablero 10x10"></div>
+    <div class="coords">Tablero de prueba 10x10. Azul: héroes. Rojo: enemigos. El número junto a cada ficha es su vida.</div>
+  </div>
+  <div class="panel">
+    <div class="box">
+      <div class="row" style="justify-content:space-between"><h2>Bolsa del turno</h2><span class="legend" id="drawinfo"></span></div>
+      <div class="bagline" id="bag"></div>
+      <div class="row">
+        <button class="btn primary" id="draw">Sacar y tirar</button>
+        <button class="btn" id="lose" disabled>Perder dado</button>
+        <button class="btn" id="end">Terminar turno</button>
+      </div>
+      <div class="row" id="pool" aria-label="Dados tirados"></div>
+      <div class="hint" id="hint"></div>
+    </div>
+    <div class="box parry" id="parrybox" hidden></div>
+    <div class="box">
+      <div class="row" style="justify-content:space-between"><h2 id="selname">Acciones</h2></div>
+      <div class="row">
+        <button class="btn" id="aMove" disabled>Mover</button>
+        <button class="btn" id="aAtk" disabled>Atacar</button>
+        <button class="btn" id="aCharge" disabled>Cargar</button>
+        <button class="btn" id="aCancel">Cancelar</button>
+      </div>
+      <div class="legend">Elige un personaje y marca dados de su hoja. Mover: amarillos (se suman). Atacar: rojos contra un enemigo adyacente. Cargar (Guerrero): un morado de 5 o 6, amarillos y rojos; doble daño.</div>
+    </div>
+    <div class="box"><h2>Héroes</h2><div class="sheets" id="sheets0"></div></div>
+    <div class="box"><h2>Enemigos</h2><div class="sheets" id="sheets1"></div></div>
+    <div class="box"><h2>Registro</h2><div class="log" id="log"></div></div>
+  </div>
+</div>
+
+<script>
+(function(){
+const C=['r','g','y','p'];
+const CN={r:'Ataque',g:'Defensa',y:'Agilidad',p:'Especial',k:'Negro'};
+const AB={r:'ATK',g:'DEF',y:'AGI',p:'ESP'};
+const SIDE=['Héroes','Enemigos'];
+const N=10;
+let S;
+const $=id=>document.getElementById(id);
+let uid=0;
+function die(c,v){return {id:++uid,c,v};}
+function newGame(){
+  const units=[];
+  for(let s=0;s<2;s++)for(let i=0;i<4;i++){
+    units.push({id:s*4+i,side:s,name:(s?'Enemigo ':'Guerrero ')+(i+1),cls:'guerrero',
+      stats:{r:3,g:3,y:1,p:1},hp:10,max:10,x:3+i,y:s?0:9,ko:false,dice:{r:[],g:[],y:[],p:[]}});
+  }
+  const bags=[[],[]];
+  for(const u of units)for(const c of C)for(let k=0;k<u.stats[c]+1;k++)bags[u.side].push(c);
+  S={units,bags,disc:[[],[]],blacks:[0,0],active:0,turn:1,pool:[],drawn:false,
+     selPool:null,selUnit:null,selDice:new Set(),mode:null,chargeTarget:null,attack:null,log:[],over:null};
+  log('Empieza la partida. Turno de los Héroes.');
+}
+function log(t){S.log.unshift(t);if(S.log.length>80)S.log.pop();}
+function unitAt(x,y){return S.units.find(u=>!u.ko&&u.x===x&&u.y===y);}
+function rnd(n){return Math.floor(Math.random()*n);}
+function refill(s){
+  if(!S.disc[s].length&&!S.bags[s].length){return false;}
+  S.bags[s]=S.bags[s].concat(S.disc[s]);S.disc[s]=[];
+  S.bags[s].push('k');S.blacks[s]++;
+  log(SIDE[s]+': la bolsa se vacía y se rellena con los descartes. Se añade un dado negro (ya hay '+S.blacks[s]+').');
+  return true;
+}
+function draw(){
+  const s=S.active;
+  const n=2*S.units.filter(u=>u.side===s&&!u.ko).length;
+  const got=[];
+  for(let i=0;i<n;i++){
+    if(!S.bags[s].length){if(!refill(s))break;}
+    const c=S.bags[s].splice(rnd(S.bags[s].length),1)[0];
+    const d=die(c,1+rnd(6));S.pool.push(d);got.push(d);
+  }
+  S.drawn=true;
+  log(SIDE[s]+' sacan '+got.length+' dados: '+got.map(d=>CN[d.c]+' '+d.v).join(', ')+'.');
+  if(got.some(d=>d.c==='k'))log('Ha salido un dado negro. Su efecto está por definir; se descarta al final del turno.');
+}
+function discard(s,c){S.disc[s].push(c);}
+function placeSelected(u){
+  const d=S.pool.find(x=>x.id===S.selPool);if(!d)return;
+  if(u.side!==S.active||u.ko){hint('Ese personaje no es tuyo.');return;}
+  if(d.c==='k'){hint('El dado negro no se puede colocar.');return;}
+  if(u.dice[d.c].length>=u.stats[d.c]){hint(u.name+' no tiene slots libres de '+CN[d.c]+'.');return;}
+  u.dice[d.c].push(d);S.pool=S.pool.filter(x=>x!==d);S.selPool=null;
+  log(u.name+' guarda un dado de '+CN[d.c]+' con valor '+d.v+'.');
+}
+function selected(){
+  const u=S.units[S.selUnit];if(!u)return [];
+  const out=[];for(const c of C)for(const d of u.dice[c])if(S.selDice.has(d.id))out.push(d);return out;
+}
+function spend(u,ds){for(const d of ds){u.dice[d.c]=u.dice[d.c].filter(x=>x!==d);discard(u.side,d.c);}S.selDice.clear();}
+function neighbors(x,y){return [[x+1,y],[x-1,y],[x,y+1],[x,y-1]].filter(([a,b])=>a>=0&&b>=0&&a<N&&b<N);}
+function reach(u,max,target){
+  // BFS ortogonal. Con target: cada paso debe acercarse (sin retroceder) y el destino es adyacente al objetivo.
+  const dist=(x,y)=>Math.abs(x-target.x)+Math.abs(y-target.y);
+  const seen=new Map();seen.set(u.x+','+u.y,0);const q=[[u.x,u.y,0]];const res=[];
+  while(q.length){
+    const [x,y,k]=q.shift();
+    if(target){if(dist(x,y)===1)res.push([x,y]);}else if(k>0)res.push([x,y]);
+    if(k===max)continue;
+    for(const [a,b] of neighbors(x,y)){
+      const key=a+','+b;if(seen.has(key))continue;
+      if(unitAt(a,b))continue;
+      if(target&&dist(a,b)>=dist(x,y))continue;
+      seen.set(key,k+1);q.push([a,b,k+1]);
+    }
+  }
+  return res;
+}
+function adjEnemies(x,y,side){return S.units.filter(e=>!e.ko&&e.side!==side&&Math.abs(e.x-x)+Math.abs(e.y-y)===1);}
+function startAttack(att,tgt,reds,charge,extra){
+  S.attack={att:att.id,tgt:tgt.id,reds:reds.map(d=>d.v),charge,parried:[],selGreen:null};
+  spend(att,reds.concat(extra||[]));
+  S.mode=null;
+  log(att.name+(charge?' carga contra ':' ataca a ')+tgt.name+' con rojos '+S.attack.reds.join(', ')+'.');
+}
+function resolveAttack(){
+  const A=S.attack,att=S.units[A.att],tgt=S.units[A.tgt];
+  const left=A.reds.filter((v,i)=>!A.parried.includes(i));
+  const hits=left.filter(v=>v>tgt.stats.g).length;
+  const dmg=hits*(A.charge?2:1);
+  tgt.hp=Math.max(0,tgt.hp-dmg);
+  log('Resultado: '+A.parried.length+' parados, '+hits+' impactos (superan Defensa '+tgt.stats.g+'). '+tgt.name+' recibe '+dmg+' de daño y queda con '+tgt.hp+'.');
+  if(tgt.hp===0){tgt.ko=true;tgt.x=tgt.y=-1;log(tgt.name+' queda inconsciente.');}
+  S.attack=null;
+  for(let s=0;s<2;s++)if(S.units.every(u=>u.side!==s||u.ko)){S.over=SIDE[1-s];log('¡Ganan los '+SIDE[1-s]+'!');}
+}
+function endTurn(){
+  const s=S.active;
+  if(S.pool.length){log(S.pool.length+' dados sin colocar se pierden.');for(const d of S.pool)discard(s,d.c);}
+  S.pool=[];
+  let grown=0;
+  for(const u of S.units)if(u.side===s&&!u.ko)for(const c of C)for(const d of u.dice[c])if(d.v<6){d.v++;grown++;}
+  if(grown)log('Los dados guardados de los '+SIDE[s]+' suben 1 ('+grown+' dados).');
+  S.active=1-s;if(S.active===0)S.turn++;
+  S.drawn=false;S.selPool=null;S.selUnit=null;S.selDice.clear();S.mode=null;S.chargeTarget=null;
+  log('Turno de los '+SIDE[S.active]+'.');
+}
+let hintText='';
+function hint(t){hintText=t;}
+
+// ---------- render ----------
+function render(){
+  $('turn').innerHTML=S.over?'<span class="win">Ganan los '+S.over+'</span>':'Ronda '+S.turn+' · turno de los <b class="'+(S.active?'f':'h')+'">'+SIDE[S.active]+'</b>';
+  const s=S.active;
+  const counts={r:0,g:0,y:0,p:0,k:0};for(const c of S.bags[s])counts[c]++;
+  $('bag').innerHTML=['r','g','y','p','k'].map(c=>'<span><i class="sw" style="background:var(--'+({r:'red',g:'green',y:'yellow',p:'purple',k:'black'})[c]+')"></i>'+CN[c]+' <b>'+counts[c]+'</b></span>').join('')+'<span>Descartes <b>'+S.disc[s].length+'</b></span><span>Negros añadidos <b>'+S.blacks[s]+'</b></span>';
+  $('drawinfo').textContent='Saca '+2*S.units.filter(u=>u.side===s&&!u.ko).length+' dados';
+  $('draw').disabled=S.drawn||!!S.over||!!S.attack;
+  $('lose').disabled=S.selPool==null;
+  $('end').disabled=!!S.attack||!!S.over;
+  $('pool').innerHTML=S.pool.length?S.pool.map(d=>'<button class="die '+d.c+(S.selPool===d.id?' sel':'')+'" data-pool="'+d.id+'" aria-label="'+CN[d.c]+' '+d.v+'">'+d.v+'</button>').join(''):'<span class="legend">'+(S.drawn?'No quedan dados por colocar.':'Pulsa “Sacar y tirar”.')+'</span>';
+  // board
+  let reachCells=[],tgtCells=[];
+  const su=S.units[S.selUnit];
+  if(su&&S.mode==='move'){reachCells=reach(su,sumOf('y'),null);}
+  if(su&&S.mode==='attack'){tgtCells=adjEnemies(su.x,su.y,su.side).map(e=>[e.x,e.y]);}
+  if(su&&S.mode==='charge-target'){tgtCells=S.units.filter(e=>!e.ko&&e.side!==su.side&&(Math.abs(e.x-su.x)+Math.abs(e.y-su.y)===1||reach(su,sumOf('y'),e).length)).map(e=>[e.x,e.y]);}
+  if(su&&S.mode==='charge-dest'){const t=S.units[S.chargeTarget];reachCells=reach(su,sumOf('y'),t);if(Math.abs(t.x-su.x)+Math.abs(t.y-su.y)===1)reachCells.push([su.x,su.y]);tgtCells=[[t.x,t.y]];}
+  const isIn=(arr,x,y)=>arr.some(([a,b])=>a===x&&b===y);
+  let h='';
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    const u=unitAt(x,y);
+    const cls='cell'+(isIn(reachCells,x,y)?' hl':'')+(isIn(tgtCells,x,y)?' tgt':'');
+    h+='<button class="'+cls+'" data-x="'+x+'" data-y="'+y+'" aria-label="Casilla '+(x+1)+','+(y+1)+'">'+(u?'<span class="tok '+(u.side?'f':'h')+(S.selUnit===u.id?' sel':'')+'">'+(u.side?'E':'G')+(u.id%4+1)+'<small>'+u.hp+'</small></span>':'')+'</button>';
+  }
+  $('board').innerHTML=h;
+  for(let side=0;side<2;side++){
+    $('sheets'+side).innerHTML=S.units.filter(u=>u.side===side).map(u=>{
+      let rows=C.map(c=>{
+        let r='<div class="srow"><span class="lab">'+AB[c]+'</span>';
+        for(let k=0;k<u.stats[c];k++){const d=u.dice[c][k];r+=d?'<button class="die '+c+(S.selDice.has(d.id)?' sel':'')+'" data-u="'+u.id+'" data-d="'+d.id+'" aria-label="'+CN[c]+' '+d.v+'">'+d.v+'</button>':'<span class="slot"></span>';}
+        return r+'</div>';}).join('');
+      return '<div class="sheet'+(S.selUnit===u.id?' sel':'')+(u.ko?' ko':'')+'" data-sheet="'+u.id+'" role="button" tabindex="0"><div class="nm"><span>'+u.name+'</span><span class="hp">'+(u.ko?'Inconsciente':u.hp+'/'+u.max)+'</span></div><div class="hpbar"><i style="width:'+(u.hp/u.max*100)+'%"></i></div>'+rows+'</div>';
+    }).join('');
+  }
+  // actions
+  const sel=selected();const by=c=>sel.filter(d=>d.c===c);
+  const mine=su&&su.side===S.active&&!su.ko&&!S.attack&&!S.over;
+  $('selname').textContent=su?'Acciones: '+su.name:'Acciones';
+  $('aMove').disabled=!(mine&&by('y').length&&sel.length===by('y').length);
+  $('aAtk').disabled=!(mine&&by('r').length&&sel.length===by('r').length);
+  const pp=by('p');
+  $('aCharge').disabled=!(mine&&su.cls==='guerrero'&&pp.length===1&&pp[0].v>=5&&by('y').length&&by('r').length&&sel.length===pp.length+by('y').length+by('r').length);
+  // parry
+  const pb=$('parrybox');
+  if(S.attack){
+    const A=S.attack,t=S.units[A.tgt];
+    pb.hidden=false;
+    let html='<h2>Defensa de '+t.name+'</h2><div class="legend">Los '+SIDE[t.side]+' pueden parar: elige un dado verde y luego un rojo de valor igual o menor. Los rojos que queden hieren si superan Defensa '+t.stats.g+(A.charge?' (carga: 2 heridas por impacto)':'')+'.</div>';
+    html+='<div class="pair"><span class="legend" style="width:70px">Rojos</span>'+A.reds.map((v,i)=>'<button class="die r'+(A.parried.includes(i)?' used':'')+'" data-red="'+i+'">'+v+'</button>').join('')+'</div>';
+    html+='<div class="pair"><span class="legend" style="width:70px">Verdes</span>'+(t.dice.g.length?t.dice.g.map(d=>'<button class="die g'+(A.selGreen===d.id?' sel':'')+'" data-green="'+d.id+'">'+d.v+'</button>').join(''):'<span class="legend">Sin verdes guardados</span>')+'</div>';
+    html+='<div class="row"><button class="btn primary" id="resolve">Resolver ataque</button></div>';
+    pb.innerHTML=html;
+  } else pb.hidden=true;
+  $('hint').textContent=hintText||defaultHint();
+  $('log').innerHTML=S.log.map(t=>'<div>'+t+'</div>').join('');
+  hintText='';
+}
+function sumOf(c){return selected().filter(d=>d.c===c).reduce((a,d)=>a+d.v,0);}
+function defaultHint(){
+  if(S.over)return 'Partida terminada. Recarga la página para empezar otra.';
+  if(S.attack)return 'Resuelve la defensa antes de seguir.';
+  if(S.mode==='move')return 'Elige una casilla resaltada para mover ('+sumOf('y')+' casillas como máximo).';
+  if(S.mode==='attack')return 'Elige un enemigo adyacente.';
+  if(S.mode==='charge-target')return 'Elige el enemigo contra el que cargar.';
+  if(S.mode==='charge-dest')return 'Elige la casilla final de la carga, junto al objetivo.';
+  if(S.selPool!=null)return 'Toca un personaje tuyo (ficha u hoja) para guardar el dado, o piérdelo.';
+  if(!S.drawn)return 'Saca y tira los dados del turno.';
+  return 'Coloca dados, actúa con un personaje o termina el turno.';
+}
+function clickUnit(u){
+  if(S.selPool!=null){placeSelected(u);return;}
+  if(S.selUnit!==u.id){S.selUnit=u.id;S.selDice.clear();S.mode=null;}
+}
+document.addEventListener('click',e=>{
+  if(!S)return;
+  const t=e.target.closest('button,[data-sheet]');if(!t)return;
+  if(t.id==='draw'){draw();}
+  else if(t.id==='lose'){const d=S.pool.find(x=>x.id===S.selPool);if(d){S.pool=S.pool.filter(x=>x!==d);discard(S.active,d.c);log('Se pierde un dado de '+CN[d.c]+' ('+d.v+').');S.selPool=null;}}
+  else if(t.id==='end'){endTurn();}
+  else if(t.id==='aMove'){S.mode='move';}
+  else if(t.id==='aAtk'){S.mode='attack';}
+  else if(t.id==='aCharge'){S.mode='charge-target';}
+  else if(t.id==='aCancel'){S.mode=null;S.selDice.clear();S.selPool=null;}
+  else if(t.id==='resolve'){resolveAttack();}
+  else if(t.dataset.pool){const id=+t.dataset.pool;S.selPool=S.selPool===id?null:id;}
+  else if(t.dataset.red!=null&&S.attack){const A=S.attack,i=+t.dataset.red;const tg=S.units[A.tgt];
+    if(A.selGreen==null){hint('Primero elige un dado verde.');}
+    else if(A.parried.includes(i)){hint('Ese rojo ya está parado.');}
+    else{const g=tg.dice.g.find(d=>d.id===A.selGreen);if(g.v<A.reds[i]){hint('El verde ('+g.v+') no puede parar un rojo de '+A.reds[i]+'.');}
+      else{A.parried.push(i);spend(tg,[g]);A.selGreen=null;log(tg.name+' para un rojo de '+A.reds[i]+' con un verde de '+g.v+'.');}}}
+  else if(t.dataset.green&&S.attack){const id=+t.dataset.green;S.attack.selGreen=S.attack.selGreen===id?null:id;}
+  else if(t.dataset.d){const u=S.units[+t.dataset.u];
+    if(S.selPool!=null){placeSelected(u);}
+    else{if(S.selUnit!==u.id){S.selUnit=u.id;S.selDice.clear();}
+      if(u.side!==S.active){hint('Solo puedes usar dados de tu bando en tu turno.');}
+      else{const id=+t.dataset.d;S.selDice.has(id)?S.selDice.delete(id):S.selDice.add(id);S.mode=null;}}}
+  else if(t.dataset.sheet!=null){clickUnit(S.units[+t.dataset.sheet]);}
+  else if(t.dataset.x!=null){
+    const x=+t.dataset.x,y=+t.dataset.y,u=unitAt(x,y),su=S.units[S.selUnit];
+    if(S.mode==='move'&&su){
+      if(reach(su,sumOf('y'),null).some(([a,b])=>a===x&&b===y)){const ys=selected();su.x=x;su.y=y;spend(su,ys);S.mode=null;log(su.name+' se mueve a '+(x+1)+','+(y+1)+' gastando amarillos '+ys.map(d=>d.v).join(', ')+'.');}
+      else hint('No puedes llegar ahí.');
+    } else if(S.mode==='attack'&&su){
+      if(u&&adjEnemies(su.x,su.y,su.side).includes(u)){startAttack(su,u,selected(),false);}else hint('Elige un enemigo adyacente.');
+    } else if(S.mode==='charge-target'&&su){
+      if(u&&u.side!==su.side){S.chargeTarget=u.id;S.mode='charge-dest';}else hint('Elige un enemigo.');
+    } else if(S.mode==='charge-dest'&&su){
+      const tg=S.units[S.chargeTarget];
+      let ok=reach(su,sumOf('y'),tg).some(([a,b])=>a===x&&b===y)||(x===su.x&&y===su.y&&Math.abs(tg.x-su.x)+Math.abs(tg.y-su.y)===1);
+      if(ok){const sel=selected();su.x=x;su.y=y;const reds=sel.filter(d=>d.c==='r');startAttack(su,tg,reds,true,sel.filter(d=>d.c!=='r'));}
+      else hint('Esa casilla no vale para la carga.');
+    } else if(u){clickUnit(u);}
+  }
+  render();
+});
+document.addEventListener('keydown',e=>{const t=e.target.closest&&e.target.closest('[data-sheet]');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();t.click();}});
+newGame();render();
+})();
+</script>
+
+</body>
+</html>
