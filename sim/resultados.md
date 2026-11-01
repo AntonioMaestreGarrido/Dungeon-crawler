@@ -115,3 +115,13 @@ Armadura 1 en **ambos** bandos, para valorar sin sesgo.
 | Umbral (rojo debe superar Defensa + 1) | 38% | 153 (84–200) | 31% |
 | Reduce 1 por impacto (mínimo 1) | 46% | 113 (77–195) | 9% |
 | Absorbe 1 herida por ataque | 11% | 200 (174–200) | 81% |
+
+## Armadura solo en los héroes, enemigos idénticos sin armadura (4 vs 4 de 3/3/1/1, movilidad fija 2, 1000 partidas)
+| Armadura 1 en los héroes | Héroes gana | Enemigos gana | Rondas (mediana) |
+|---|---|---|---|
+| Sin armadura (referencia) | 54% | 44% | 70 |
+| Umbral (rojo > Defensa + 1) | 96,5% | 2,3% | 57 |
+| Reduce 1 por impacto (mínimo 1) | 84% | 13,5% | 69 |
+| Absorbe 1 herida por ataque | 99,8% | 0% | 56 |
+
+Armadura 1 vale más que cualquier otro cambio probado: un personaje con armadura 1 contra uno idéntico sin ella gana casi siempre.
