@@ -206,3 +206,15 @@ Los enemigos no cargan en estas pruebas (para comparar en igualdad). «Cerca» =
 | 1-3 flojo, 4-6 fuerte | arqueros | 0,3% (ronda 58) | 3,0 | 2,0 |
 
 Perseguir a los arqueros apenas cambia nada: los Guerreros hacen de muro, los arqueros se mueven más y disparan antes. Lo que decide la partida es el ritmo del dado negro, no la puntería de los enemigos.
+
+## Enemigo flojo rápido (movilidad 4) — 3 Guerreros + 2 Arqueros, 300 partidas (`simular4.py`)
+| Dado negro | Flojo | Los enemigos van a | Sobreviven | Guerreros KO | Arqueros KO |
+|---|---|---|---|---|---|
+| Solo 5-6 | movilidad 2 | héroe más cercano | 100% | 0,02 | 0,02 |
+| Solo 5-6 | movilidad 4 | héroe más cercano | 100% | 0,01 | 0,06 |
+| Solo 5-6 | movilidad 4 | arqueros | 100% | 0,02 | **0,15** |
+| 1-3 flojo, 4-6 fuerte | movilidad 2 | héroe más cercano | 0% (ronda 58) | 3,0 | 2,0 |
+| 1-3 flojo, 4-6 fuerte | movilidad 4 | héroe más cercano | 3% (ronda 58) | 3,0 | 2,0 |
+| 1-3 flojo, 4-6 fuerte | movilidad 4 | arqueros | 3% (ronda 59) | 2,9 | 2,0 |
+
+Los flojos rápidos triplican o quintuplican las bajas de arqueros (de 0,02 a 0,06-0,15), pero siguen siendo pocas. El peso de la partida lo sigue llevando el ritmo del dado negro.

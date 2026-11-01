@@ -21,7 +21,7 @@ CLASES = {
 
 
 class Game2(Game):
-    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None, draw_policy='dos', party=None, hp_bonus=0):
+    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None, draw_policy='dos', party=None, hp_bonus=0, flojo_move=2):
         super().__init__(free_step=2, rng=rng, hp=hero_hp, dmg_mode="margen", foes=0)
         s.units = []
         for i, cl in enumerate(party or ["g"] * 4):
@@ -35,6 +35,7 @@ class Game2(Game):
                 s.bag[0] += [c] * (u.stats[c] + 1)
         s.disc = [[], []]
         s.draw_policy = draw_policy
+        s.flojo_move = flojo_move
         s.black_returns = black_returns
         s.spawn_table = spawn_table or (lambda v: FLOJO if v <= 3 else FUERTE)
         s.spawned = 0
@@ -52,7 +53,7 @@ class Game2(Game):
         x, y = s.rng.choice(cells)
         u = Unit(1, len([v for v in s.units if v.side == 1]), hp, stats)
         u.weapon, u.x, u.y = weapon, x, y
-        u.move, u.dist, u.cls = 2, 1, 'e'
+        u.move, u.dist, u.cls = (s.flojo_move if stats is FLOJO[0] else 2), 1, 'e'
         s.units.append(u)
         for c in COLS:
             s.bag[1] += [c] * (u.stats[c] + 1)

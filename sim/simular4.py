@@ -71,10 +71,10 @@ if __name__ == "__main__":
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 300
     t56 = lambda v: FLOJO if v == 5 else (FUERTE if v == 6 else None)
     for tname, tab in [("negro: solo 5-6", t56), ("negro: 1-3 flojo, 4-6 fuerte", None)]:
-        for chase in ("cerca", "arqueros"):
-            kw = dict(party=list("gggaa"), draw_policy="adapt", chase=chase)
+        for chase, fm in (("cerca", 2), ("cerca", 4), ("arqueros", 4)):
+            kw = dict(party=list("gggaa"), draw_policy="adapt", chase=chase, flojo_move=fm)
             if tab:
                 kw["spawn_table"] = tab
-            print(f"\n== 3G+2A, {tname}, enemigos van a: {chase} ({n} partidas) ==")
+            print(f"\n== 3G+2A, {tname}, flojo con movilidad {fm}, enemigos van a: {chase} ({n} partidas) ==")
             for k, v in run(n, **kw).items():
                 print(f"  {k}: {v}")
