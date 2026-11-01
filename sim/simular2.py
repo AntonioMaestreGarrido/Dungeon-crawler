@@ -16,7 +16,7 @@ HEROE = ({"r": 3, "g": 3, "y": 1, "p": 1}, 10, 2)
 
 
 class Game2(Game):
-    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None):
+    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None, draw_policy='dos'):
         super().__init__(free_step=2, rng=rng, hp=hero_hp, dmg_mode="margen", foes=0)
         s.units = []
         for i in range(4):
@@ -26,6 +26,7 @@ class Game2(Game):
             for c in COLS:
                 s.bag[0] += [c] * (u.stats[c] + 1)
         s.disc = [[], []]
+        s.draw_policy = draw_policy
         s.black_returns = black_returns
         s.spawn_table = spawn_table or (lambda v: FLOJO if v <= 3 else FUERTE)
         s.spawned = 0
@@ -49,7 +50,14 @@ class Game2(Game):
 
     def draw(s, side):
         out = []
-        for _ in range(2 * len(s.alive(side))):
+        if side == 0 and s.draw_policy != 'dos':
+            n = 0
+            for u in s.alive(0):
+                free = sum(max(0, u.stats[c] - len(u.dice[c])) for c in COLS)
+                n += 1 if (s.draw_policy == 'uno' or free < 4) else 2
+        else:
+            n = 2 * len(s.alive(side))
+        for _ in range(n):
             if not s.bag[side]:
                 if not s.disc[side]:
                     break
@@ -165,10 +173,12 @@ def run(n, **kw):
 if __name__ == "__main__":
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 300
     t56 = lambda v: FLOJO if v == 5 else (FUERTE if v == 6 else None)
-    for name, kw in [("Antes: 1-3 flojo, 4-6 fuerte, vida 15", dict(hero_hp=15)),
-                     ("Solo 5 flojo y 6 fuerte, vida 10", dict(hero_hp=10, spawn_table=t56)),
-                     ("Solo 5 flojo y 6 fuerte, vida 15", dict(hero_hp=15, spawn_table=t56)),
-                     ("Solo 5 flojo y 6 fuerte, vida 20", dict(hero_hp=20, spawn_table=t56))]:
+    for name, kw in [("Robar 2 por personaje (fijo), 1-3 flojo 4-6 fuerte", dict(hero_hp=15)),
+                     ("Robar 1-2 (adaptativo), 1-3 flojo 4-6 fuerte", dict(hero_hp=15, draw_policy='adapt')),
+                     ("Robar siempre 1, 1-3 flojo 4-6 fuerte", dict(hero_hp=15, draw_policy='uno')),
+                     ("Robar 2 (fijo), solo 5 y 6", dict(hero_hp=15, spawn_table=t56)),
+                     ("Robar 1-2 (adaptativo), solo 5 y 6", dict(hero_hp=15, spawn_table=t56, draw_policy='adapt')),
+                     ("Robar siempre 1, solo 5 y 6", dict(hero_hp=15, spawn_table=t56, draw_policy='uno'))]:
         print(f"\n== {name} ({n} partidas, 80 rondas) ==")
         for k, v in run(n, **kw).items():
             print(f"  {k}: {v}")

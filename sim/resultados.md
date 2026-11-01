@@ -165,3 +165,17 @@ Mismas reglas que la tabla anterior (los negros vuelven y se acumulan).
 | Solo 5 y 6, vida 20 | 26% | 69 | 45 | 37 | 16,6 |
 
 Casi se duplica la supervivencia en rondas (de 38 a ~67), pero los héroes siguen cayendo el ~75-80% de las veces: como los negros se acumulan, el ritmo sigue subiendo con cada relleno.
+
+## Robar opcional (entre 1 y 2 dados por personaje vivo) — héroes con vida 15, 300 partidas, 80 rondas
+IA «adaptativa»: roba 2 dados por personaje si tiene 4 o más slots libres y 1 si no. «Siempre 1» y «siempre 2» son los extremos.
+
+| Dado negro | Robar | Héroes sobreviven | Caen hacia la ronda | Enemigos aparecidos | Derrotados |
+|---|---|---|---|---|---|
+| 1-3 flojo, 4-6 fuerte | 2 (fijo) | 0% | 38 | 35 | 24 |
+| 1-3 flojo, 4-6 fuerte | 1-2 adaptativo | 0% | 52 | 33 | 25 |
+| 1-3 flojo, 4-6 fuerte | siempre 1 | 10% | 68 | 27 | 23 |
+| Solo 5 y 6 | 2 (fijo) | 21% | 68 | 43 | 37 |
+| Solo 5 y 6 | 1-2 adaptativo | 95% | — | 27 | 29 |
+| Solo 5 y 6 | siempre 1 | 98% | — | 19 | 22 |
+
+Robar menos retrasa el negro y cambia mucho el resultado; combinado con «solo 5 y 6» los héroes casi siempre aguantan las 80 rondas. El punto de equilibrio queda entre las dos combinaciones.
