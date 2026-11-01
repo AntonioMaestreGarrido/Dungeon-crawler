@@ -179,3 +179,18 @@ IA «adaptativa»: roba 2 dados por personaje si tiene 4 o más slots libres y 1
 | Solo 5 y 6 | siempre 1 | 98% | — | 19 | 22 |
 
 Robar menos retrasa el negro y cambia mucho el resultado; combinado con «solo 5 y 6» los héroes casi siempre aguantan las 80 rondas. El punto de equilibrio queda entre las dos combinaciones.
+
+## Guerreros y Arqueros (`simular3.py`) — 300 partidas, 80 rondas
+Dado negro: solo 5 (flojo) y 6 (fuerte) añaden enemigo; los negros vuelven y se acumulan; robar 1-2 dados por personaje (IA adaptativa).
+Guerrero: 3/3/1/1, vida 10, arma +2, movilidad 2, distancia 1. Arquero: 1/1/2/3, vida 8, arma +1, movilidad 3, distancia 5 (rojos y morados disparan a 2-5 casillas).
+Los enemigos solo atacan cuerpo a cuerpo. El arquero se aleja de los adyacentes y busca una casilla desde la que disparar.
+
+| Grupo | Sobreviven | Enemigos derrotados | Héroes inconscientes (media) | Daño que hacen los arqueros |
+|---|---|---|---|---|
+| 4 Guerreros | 93% | 29 | 0,60 | — |
+| 5 Guerreros (control) | 98% | 34 | 0,24 | — |
+| 3 Guerreros + 2 Arqueros (vida 10 y 8) | 100% | 35 | 0,05 | 29% |
+| 3 Guerreros + 2 Arqueros (vida 15 y 12) | 100% | 36 | 0,02 | 29% |
+| 2 Guerreros + 3 Arqueros (vida 10 y 8) | 99% | 36 | 0,10 | 45% |
+
+Con estas reglas los arqueros hacen menos daño del que les «toca» por número (2 de 5 personajes hacen el 29%), pero protegen mucho: casi nadie cae. Disparar sin riesgo es muy ventajoso porque los enemigos no tienen ataque a distancia.

@@ -13,14 +13,22 @@ from simular import Game, Unit, COLS
 FLOJO = ({"r": 2, "g": 1, "y": 1, "p": 1}, 5, 0)    # atributos, vida, bono de arma
 FUERTE = ({"r": 3, "g": 2, "y": 1, "p": 1}, 10, 1)
 HEROE = ({"r": 3, "g": 3, "y": 1, "p": 1}, 10, 2)
+# clase: atributos, vida, bono de arma, movilidad fija, distancia
+CLASES = {
+    "g": ({"r": 3, "g": 3, "y": 1, "p": 1}, 10, 2, 2, 1),
+    "a": ({"r": 1, "g": 1, "y": 2, "p": 3}, 8, 1, 3, 5),
+}
 
 
 class Game2(Game):
-    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None, draw_policy='dos'):
+    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None, draw_policy='dos', party=None, hp_bonus=0):
         super().__init__(free_step=2, rng=rng, hp=hero_hp, dmg_mode="margen", foes=0)
         s.units = []
-        for i in range(4):
-            u = Unit(0, i, hero_hp, HEROE[0]); u.weapon = HEROE[2]; s.units.append(u)
+        for i, cl in enumerate(party or ["g"] * 4):
+            st, hp0, w, mv, dist = CLASES[cl]
+            u = Unit(0, i, hp0 + hp_bonus if party else hero_hp, st)
+            u.weapon, u.move, u.dist, u.cls = w, mv, dist, cl
+            s.units.append(u)
         s.bag = [[], []]
         for u in s.units:
             for c in COLS:
@@ -44,6 +52,7 @@ class Game2(Game):
         x, y = s.rng.choice(cells)
         u = Unit(1, len([v for v in s.units if v.side == 1]), hp, stats)
         u.weapon, u.x, u.y = weapon, x, y
+        u.move, u.dist, u.cls = 2, 1, 'e'
         s.units.append(u)
         for c in COLS:
             s.bag[1] += [c] * (u.stats[c] + 1)
@@ -100,6 +109,7 @@ class Game2(Game):
         dmg *= 2 if charge else 1
         s.st["cargas"] += charge
         s.st["dano"] += dmg
+        s.st["dano_" + att.cls] += dmg
         tgt.hp -= dmg
         if tgt.hp <= 0:
             tgt.hp, tgt.ko = 0, True
