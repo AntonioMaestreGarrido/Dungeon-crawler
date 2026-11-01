@@ -58,7 +58,7 @@ _Documento vivo. Se va completando paso a paso._
   - **A todos los efectos es un dado amarillo** que está disponible cada turno y **nunca se tira**: se suma a otros amarillos y sirve también para la carga.
   - Si se usa, vuelve a estar disponible el turno siguiente; no ocupa slot, no va a la bolsa ni crece.
   - Como los enemigos son idénticos a los personajes, también lo tienen.
-  - Por confirmar: valor del Guerrero (propuesta: 2).
+  - Valor del Guerrero: **2**.
   - Simulación (vs 6 enemigos débiles): con valor 1-4 los turnos sin poder moverse bajan del 51% al 2-8%, sin cambiar el equilibrio.
 - **No** se puede atravesar a aliados ni a enemigos.
 
