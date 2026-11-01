@@ -16,7 +16,7 @@ HEROE = ({"r": 3, "g": 3, "y": 1, "p": 1}, 10, 2)
 
 
 class Game2(Game):
-    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True):
+    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True, spawn_table=None):
         super().__init__(free_step=2, rng=rng, hp=hero_hp, dmg_mode="margen", foes=0)
         s.units = []
         for i in range(4):
@@ -27,6 +27,7 @@ class Game2(Game):
                 s.bag[0] += [c] * (u.stats[c] + 1)
         s.disc = [[], []]
         s.black_returns = black_returns
+        s.spawn_table = spawn_table or (lambda v: FLOJO if v <= 3 else FUERTE)
         s.spawned = 0
         s.kills = 0
         for _ in range(foes0):
@@ -65,8 +66,12 @@ class Game2(Game):
             if c == "k":
                 if s.black_returns:
                     s.disc[side].append("k")
-                s.spawned += 1
-                s.spawn_unit(*(FLOJO if v <= 3 else FUERTE))
+                s.spawned += 1 if s.spawn_table(v) else 0
+                kind = s.spawn_table(v)
+                if kind:
+                    s.spawn_unit(*kind)
+                else:
+                    s.st['negros_sin_efecto'] += 1
             else:
                 rest.append((c, v))
         super().place(side, rest)
@@ -159,10 +164,11 @@ def run(n, **kw):
 
 if __name__ == "__main__":
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 300
-    for name, kw in [("Reglas actuales: los negros vuelven y se acumulan, vida 15", dict(hero_hp=15)),
-                     ("Reglas actuales, vida 20", dict(hero_hp=20)),
-                     ("Alternativa: el negro sale del juego al usarse (+1 por vuelta), vida 15", dict(hero_hp=15, black_returns=False)),
-                     ("Alternativa: el negro sale del juego, vida 10", dict(hero_hp=10, black_returns=False))]:
+    t56 = lambda v: FLOJO if v == 5 else (FUERTE if v == 6 else None)
+    for name, kw in [("Antes: 1-3 flojo, 4-6 fuerte, vida 15", dict(hero_hp=15)),
+                     ("Solo 5 flojo y 6 fuerte, vida 10", dict(hero_hp=10, spawn_table=t56)),
+                     ("Solo 5 flojo y 6 fuerte, vida 15", dict(hero_hp=15, spawn_table=t56)),
+                     ("Solo 5 flojo y 6 fuerte, vida 20", dict(hero_hp=20, spawn_table=t56))]:
         print(f"\n== {name} ({n} partidas, 80 rondas) ==")
         for k, v in run(n, **kw).items():
             print(f"  {k}: {v}")

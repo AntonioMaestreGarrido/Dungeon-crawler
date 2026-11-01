@@ -153,3 +153,15 @@ Observaciones:
 - La IA acumula dados en las hojas (hasta 32 de los 48), así que solo circulan unos 16 y **la bolsa se rellena cada ~2 rondas**. Cada relleno añade un negro: aparece un enemigo cada ~2 rondas, y si los negros vuelven y se acumulan, el ritmo sube sin parar.
 - Con el daño actual (margen + arma +2, ×2 en carga) un enemigo flojo (vida 5) muere de un golpe: el daño medio por ataque es 6 y las cargas son frecuentes (~9 por partida).
 - Hay un punto medio sin probar: por ejemplo, un máximo de negros en la bolsa.
+
+## Solo 5 y 6 del dado negro añaden enemigos (5 = flojo, 6 = fuerte; 1-4 sin efecto) — 300 partidas, 80 rondas
+Mismas reglas que la tabla anterior (los negros vuelven y se acumulan).
+
+| Variante | Héroes sobreviven | Ronda en que caen (mediana) | Enemigos aparecidos | Derrotados | Cargas por partida |
+|---|---|---|---|---|---|
+| 1-3 flojo, 4-6 fuerte, vida 15 | 0% | 38 | 35 | 24 | 8,7 |
+| Solo 5 y 6, vida 10 | 19% | 66 | 41 | 36 | 16,5 |
+| Solo 5 y 6, vida 15 | 21% | 68 | 43 | 37 | 16,5 |
+| Solo 5 y 6, vida 20 | 26% | 69 | 45 | 37 | 16,6 |
+
+Casi se duplica la supervivencia en rondas (de 38 a ~67), pero los héroes siguen cayendo el ~75-80% de las veces: como los negros se acumulan, el ritmo sigue subiendo con cada relleno.
