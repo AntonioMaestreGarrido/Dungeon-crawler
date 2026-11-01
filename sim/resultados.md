@@ -80,3 +80,11 @@ Además diluyen la bolsa (menos rojos y verdes) y los héroes rinden peor contra
 | Agilidad 2 de uno en uno + paso | 9,8% | 77% | 41 |
 
 Repartir los amarillos en el tiempo apenas ayuda: el límite es cuántos amarillos salen de la bolsa, no cómo se gastan.
+
+## Dado fijo de movilidad (d6 propio por personaje, fuera de la bolsa) — 800 partidas
+| Variante | Sin poder mover | Héroes gana | Rondas (mediana) |
+|---|---|---|---|
+| vs 6 débiles, sin nada | 51,0% | 86% | 38 |
+| vs 6 débiles, paso básico 1 | 7,9% | 86% | 39 |
+| vs 6 débiles, dado fijo | 3,0% | 84% | 39 |
+| vs 4 iguales, dado fijo | 1,5% | 55% | 71 |

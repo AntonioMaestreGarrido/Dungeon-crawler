@@ -22,10 +22,11 @@ class Unit:
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False, fixed_move_die=False):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
         s.one_yellow = one_yellow
+        s.fixed_move_die = fixed_move_die
         s.units = [Unit(0, i, hp, hero_stats) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
@@ -177,7 +178,7 @@ class Game:
             if s.one_yellow and budget_dice:
                 budget_dice = [max(budget_dice)]  # solo un amarillo por turno: el más alto
             extra = list(u.dice["r"] + u.dice["g"]) if s.any_die_move else []
-            free = s.free_step
+            free = s.free_step + (s.rng.randint(1, 6) if s.fixed_move_die else 0)
             total = sum(budget_dice) + free + len(extra)
             if total == 0:
                 s.st["bloqueado"] += 1
