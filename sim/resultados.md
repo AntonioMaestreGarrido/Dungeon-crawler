@@ -194,3 +194,15 @@ Los enemigos solo atacan cuerpo a cuerpo. El arquero se aleja de los adyacentes 
 | 2 Guerreros + 3 Arqueros (vida 10 y 8) | 99% | 36 | 0,10 | 45% |
 
 Con estas reglas los arqueros hacen menos daño del que les «toca» por número (2 de 5 personajes hacen el 29%), pero protegen mucho: casi nadie cae. Disparar sin riesgo es muy ventajoso porque los enemigos no tienen ataque a distancia.
+
+## Enemigos que persiguen a los arqueros (`simular4.py`) — 3 Guerreros + 2 Arqueros, 300 partidas
+Los enemigos no cargan en estas pruebas (para comparar en igualdad). «Cerca» = van al héroe más próximo; «arqueros» = van al arquero más próximo y lo atacan antes que a otros.
+
+| Dado negro | Los enemigos van a | Sobreviven | Guerreros KO | Arqueros KO |
+|---|---|---|---|---|
+| Solo 5-6 | héroe más cercano | 100% | 0,02 | 0,02 |
+| Solo 5-6 | arqueros | 100% | 0,02 | **0,08** |
+| 1-3 flojo, 4-6 fuerte | héroe más cercano | 0% (caen en la ronda 58) | 3,0 | 2,0 |
+| 1-3 flojo, 4-6 fuerte | arqueros | 0,3% (ronda 58) | 3,0 | 2,0 |
+
+Perseguir a los arqueros apenas cambia nada: los Guerreros hacen de muro, los arqueros se mueven más y disparan antes. Lo que decide la partida es el ritmo del dado negro, no la puntería de los enemigos.
