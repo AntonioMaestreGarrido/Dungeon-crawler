@@ -22,10 +22,10 @@ class Unit:
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
-        s.units = [Unit(0, i, hp) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
+        s.units = [Unit(0, i, hp, hero_stats) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
             for c in COLS:

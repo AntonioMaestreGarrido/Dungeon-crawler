@@ -55,3 +55,17 @@ Conclusiones:
 - Con 4 enemigos débiles los héroes ganan siempre y casi sin daño: la partida pierde tensión.
 - La fuerza de un bando depende sobre todo de **cuántos dados saca por turno** (2 por personaje vivo). Más enemigos = más dados, y eso pesa más que sus atributos.
 - La zona interesante está en **6-8 enemigos débiles**: los héroes ganan el 83-86% pero pierden más o menos la mitad de su vida y 1-2 personajes. Entre 6 y 8 enemigos de 2/2/1/1 el equilibrio cambia muy deprisa.
+
+## Dos slots amarillos (Agilidad 2) — 800 partidas
+| Variante | Sin poder mover | Héroes gana | Rondas (mediana) |
+|---|---|---|---|
+| Agilidad 1, sin paso, vs iguales | 53,6% | 56% | 62 |
+| Agilidad 1 + paso básico, vs iguales | 5,3% | 57% | 70 |
+| Agilidad 2, sin paso, vs iguales (Agilidad 2) | 50,3% | 58% | 65 |
+| Agilidad 2 + paso, vs iguales (Agilidad 2) | 4,1% | 52% | 67 |
+| Agilidad 1 + paso, vs 6 de 2/2/1/1 vida 6 | 7,9% | 86% | 39 |
+| Agilidad 2, sin paso, vs 6 débiles | 50,7% | 75% | 42 |
+| Agilidad 2 + paso, vs 6 débiles | 12,0% | 74% | 42 |
+
+Con Agilidad 2 salen ~1,8 amarillos por turno para 4 héroes: más slots dejan guardar, pero no crean más amarillos.
+Además diluyen la bolsa (menos rojos y verdes) y los héroes rinden peor contra 6 enemigos débiles.
