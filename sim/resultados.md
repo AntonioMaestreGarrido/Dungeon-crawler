@@ -125,3 +125,13 @@ Armadura 1 en **ambos** bandos, para valorar sin sesgo.
 | Absorbe 1 herida por ataque | 99,8% | 0% | 56 |
 
 Armadura 1 vale más que cualquier otro cambio probado: un personaje con armadura 1 contra uno idéntico sin ella gana casi siempre.
+
+## Daño por impacto: 1 frente a margen (rojo − Defensa) — espejo 4v4 de 3/3/1/1, movilidad fija 2, 800 partidas
+| Daño | Vida | Daño medio por ataque | Rondas (mediana; 10%–90%) | Héroes gana |
+|---|---|---|---|---|
+| 1 por impacto | 10 | 0,33 | 70 (45–135) | 55% |
+| Margen | 10 | 0,72 | 32 (22–53) | 64% |
+| Margen | 15 | 0,70 | 50 (32–88) | 58% |
+| Margen | 20 | 0,70 | 66 (45–123) | 54% |
+
+Armadura 1 solo en los héroes con daño = margen y vida 15: los héroes ganan el 99,5% (sin armadura, 58,5%). La armadura sigue siendo muy dominante.
