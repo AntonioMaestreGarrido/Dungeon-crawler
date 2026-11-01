@@ -89,8 +89,8 @@ _Documento vivo. Se va completando paso a paso._
 - Aporta a la bolsa: 4 rojos, 4 verdes, 2 amarillos, 2 morados (12 dados).
 - Arma: bono **+2** por dado que impacta. Movilidad fija: 2.
 - Vida: 10.
-- **Carga**: requiere un **dado amarillo de 5 o más** (interpretación por confirmar: sustituye al morado de 5-6 anterior).
-- Se gastan ese **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
+- **Carga** (habilidad morada): requiere **a la vez** un **dado morado de 5 o 6** y un **dado amarillo de 5 o más**.
+- Se gastan el **morado**, el **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
 - El recorrido puede ser cualquiera **sin retroceder**: ningún paso puede alejarle del objetivo.
 - La carga hace **doble daño**: el daño de cada rojo que impacta se **duplica**.
 - Los verdes del defensor **pueden parar** los rojos de una carga como en un ataque normal.
