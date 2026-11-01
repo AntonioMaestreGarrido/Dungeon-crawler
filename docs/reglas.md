@@ -134,20 +134,20 @@ _Documento vivo. Se va completando paso a paso._
 
 ## 10. Enemigos
 ### Intenciones visibles (puzle)
-- **Antes de actuar, el jugador sabe lo que van a hacer los enemigos.** Al terminar el turno enemigo se **anuncian las intenciones** del siguiente: cada enemigo muestra a qué casilla se mueve y qué casilla ataca.
+- **Antes de actuar, el jugador sabe lo que van a hacer los enemigos.** Al terminar el turno enemigo se **anuncian las intenciones** del siguiente: cada enemigo muestra a qué casilla se mueve y en qué dirección ataca.
 - El jugador resuelve su turno **sabiendo** eso: puede eliminar a un enemigo antes de que actúe, bloquear su paso, apartarse o preparar paradas.
 - Los enemigos **no tiran dados**: atacan con **dados fijos** (valores conocidos), así que el daño y las paradas se pueden calcular de antemano.
 - El ataque anunciado es una **dirección relativa al enemigo**, no un héroe concreto:
   - **Golpe cuerpo a cuerpo:** hacia delante, a la casilla adyacente en esa dirección.
   - **Disparo:** en esa dirección, a lo largo de la línea y hasta su distancia, e **impacta a la primera unidad** que encuentre (aliados incluidos).
   - Si el héroe se aparta, el golpe cae en el vacío; si hay otra unidad (incluido otro enemigo), se la lleva.
-- Si el enemigo es **movido** (p. ej. por la Telequinesis del Mago), **pierde su intención de movimiento** pero **conserva la dirección del ataque**, que ahora parte de su **nueva casilla**. Si no, el ataque se cancela solo si el enemigo muere.
+- Si el enemigo es **movido** (p. ej. por la Telequinesis del Mago), **pierde su intención de movimiento** pero **conserva la dirección del ataque**, que ahora parte de su **nueva casilla**. El ataque solo se cancela si el enemigo muere.
 - Se muestran con **flechas de trayectoria** sobre el mapa: una flecha por el camino de movimiento y otra con la dirección del golpe o disparo.
 - Por confirmar: conducta fija de cada tipo de enemigo (hacia quién se mueve y a quién ataca) y orden en que actúan.
 
 
-- De momento, los enemigos son **idénticos a los personajes**: mismos atributos, mismas reglas de slots, turno y acciones.
-- Usan **su propia bolsa** de dados, construida igual que la del jugador.
+- Modelo anterior (a sustituir por el de puzle): enemigos idénticos a los personajes, con su propia bolsa de dados.
+- Modelo de puzle (pendiente de cerrar): enemigos débiles con **dados fijos y conducta fija**, sin bolsa, e intenciones visibles (ver arriba).
 
 ## Preguntas abiertas
 - Dado negro: ¿qué atributos y vida tienen flojo y fuerte? ¿Actúa el turno en que aparece? ¿Se acumulan o salen del juego?
