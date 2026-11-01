@@ -54,9 +54,9 @@ _Documento vivo. Se va completando paso a paso._
 - Solo movimiento **ortogonal** (sin diagonales).
 - Se pueden gastar **varios amarillos a la vez** y sumar sus valores.
 - Se puede mover **menos** de lo que marca el dado (por confirmar).
-- **Dado fijo de movilidad**: cada personaje tiene un dado amarillo propio que **no va a la bolsa**. Se tira en cada turno y sirve para moverse (se puede sumar a los amarillos de la bolsa).
-  - Por confirmar: ¿se puede guardar en la hoja o se pierde al final del turno? ¿Los enemigos también lo tienen?
-  - Simulación: los turnos sin poder moverse bajan del 51% al 3%, sin cambiar el equilibrio de victorias.
+- **Dado fijo de movilidad**: cada personaje tiene un dado amarillo propio que **no va a la bolsa** y **no se tira**: tiene un **valor fijo según el personaje** (p. ej. Guerrero 2, un pícaro 4). Cada turno permite mover esas casillas.
+  - Por confirmar: ¿se puede sumar a los amarillos de la bolsa? ¿Los enemigos también lo tienen? Valor del Guerrero.
+  - Simulación (vs 6 enemigos débiles): con valor 1-4 los turnos sin poder moverse bajan del 51% al 2-8%, sin cambiar el equilibrio.
 - **No** se puede atravesar a aliados ni a enemigos.
 
 ### Atacar (dado rojo, Ataque)

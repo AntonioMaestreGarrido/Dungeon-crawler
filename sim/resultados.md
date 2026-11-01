@@ -88,3 +88,11 @@ Repartir los amarillos en el tiempo apenas ayuda: el límite es cuántos amarill
 | vs 6 débiles, paso básico 1 | 7,9% | 86% | 39 |
 | vs 6 débiles, dado fijo | 3,0% | 84% | 39 |
 | vs 4 iguales, dado fijo | 1,5% | 55% | 71 |
+
+## Dado fijo con valor fijo (movimiento base sin tirar) — vs 6 débiles, 800 partidas
+| Valor | Sin poder mover | Héroes gana | Rondas (mediana) |
+|---|---|---|---|
+| 1 | 7,9% | 86% | 39 |
+| 2 | 6,5% | 81% | 41 |
+| 3 | 3,8% | 82% | 41 |
+| 4 | 1,7% | 86% | 39 |
