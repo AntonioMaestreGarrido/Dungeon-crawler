@@ -46,7 +46,10 @@ _Documento vivo. Se va completando paso a paso._
 ## 6. Rellenar la bolsa y el dado negro
 - Cuando la bolsa se vacía, **se rellena solo con los dados gastados y perdidos** (los guardados en las hojas se quedan donde están).
 - En cada relleno se **añade un dado negro nuevo**: se van acumulando.
-- El efecto del dado negro está **por determinar**.
+- **Efecto del dado negro: aparece un enemigo.** Al sacarlo y tirarlo, su valor decide el tipo:
+  - **1-3: enemigo flojo.**
+  - **4-6: enemigo fuerte.**
+- Por confirmar: dónde aparece el enemigo, qué valores tienen flojo y fuerte, y si el dado negro se descarta y vuelve con el siguiente relleno como los demás.
 
 ## 7. Acciones
 ### Mover (dado amarillo, Agilidad)
@@ -105,10 +108,10 @@ _Documento vivo. Se va completando paso a paso._
 - Usan **su propia bolsa** de dados, construida igual que la del jugador.
 
 ## Preguntas abiertas
+- Dado negro: ¿dónde aparece el enemigo (borde del mapa, casilla al azar, cerca de un héroe)? ¿Qué atributos y vida tienen flojo y fuerte? ¿Actúa el turno en que aparece?
 - ¿Qué personajes hay y qué hace el morado de cada uno?
 - Inconsciente: ¿qué pasa con sus dados guardados? ¿Se puede reanimar? ¿Ocupa casilla? ¿Cuándo se pierde la partida?
 - ¿Cómo se alternan los turnos entre jugador y enemigos?
-- ¿Qué hace el dado negro?
 - ¿Para qué se usan los dados acumulados (atacar, defender, moverse) y qué hace su valor?
 - ¿Qué tipo de dado es (d6 normal, caras especiales)?
 - ¿Se pueden conseguir más slots durante la partida?
