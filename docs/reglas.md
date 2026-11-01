@@ -125,6 +125,14 @@ _Documento vivo. Se va completando paso a paso._
 - Tablero de **10x10** casillas.
 
 ## 10. Enemigos
+### Intenciones visibles (puzle)
+- **Antes de actuar, el jugador sabe lo que van a hacer los enemigos.** Al terminar el turno enemigo se **anuncian las intenciones** del siguiente: cada enemigo muestra a qué casilla se mueve y qué casilla ataca.
+- El jugador resuelve su turno **sabiendo** eso: puede eliminar a un enemigo antes de que actúe, bloquear su paso, apartarse o preparar paradas.
+- Los enemigos **no tiran dados**: atacan con **dados fijos** (valores conocidos), así que el daño y las paradas se pueden calcular de antemano.
+- Propuesta por confirmar: la intención apunta a una **casilla**, no a un héroe, de modo que si el héroe se va, el golpe cae en el vacío (o en quien ocupe la casilla). Si el enemigo muere o queda sin camino, su intención se cancela.
+- Por confirmar: conducta fija de cada tipo de enemigo (hacia quién se mueve y a quién ataca) y orden en que actúan.
+
+
 - De momento, los enemigos son **idénticos a los personajes**: mismos atributos, mismas reglas de slots, turno y acciones.
 - Usan **su propia bolsa** de dados, construida igual que la del jugador.
 
