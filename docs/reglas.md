@@ -3,7 +3,7 @@
 _Documento vivo. Se va completando paso a paso._
 
 ## 1. Personajes
-- Cada personaje empieza con **10 puntos de vida** (en el futuro variarán según el personaje). Cada herida quita 1 punto.
+- Cada personaje empieza con **10 puntos de vida** (en el futuro variarán según el personaje). El daño recibido quita puntos de vida.
 - Al llegar a **0** el personaje queda **inconsciente**.
 - Cada jugador controla **4 personajes**.
 - Cada personaje tiene 4 atributos: **Ataque, Defensa, Agilidad, Especial**.
@@ -64,9 +64,14 @@ _Documento vivo. Se va completando paso a paso._
 
 ### Atacar (dado rojo, Ataque)
 - Se gastan uno o varios dados rojos contra un enemigo **adyacente** (ortogonal, como el movimiento; por confirmar si cuenta la diagonal).
-- **Cada dado rojo cuyo valor supere la Defensa del objetivo causa 1 herida.**
-  - Con d6: contra Defensa 1 acierta con 2+ (83%), Defensa 2 con 3+ (67%), Defensa 3 con 4+ (50%).
-  - Decisión consciente: Defensa 1 es frágil a propósito.
+- Un dado rojo **impacta** si su valor **supera** la Defensa del objetivo.
+- **Daño de cada dado que impacta = margen + bono de arma.**
+  - **Margen** = valor del dado − Defensa del objetivo (con Defensa 3: un 4 hace 1, un 5 hace 2, un 6 hace 3).
+  - **Bono de arma** = valor fijo propio de cada personaje, que **se suma a cada dado que impacta** (p. ej. espada +0, martillo +1).
+  - Valor del Guerrero: por definir (propuesta: +0).
+- Con d6: contra Defensa 1 impacta con 2+ (83%), Defensa 2 con 3+ (67%), Defensa 3 con 4+ (50%).
+- Decisión consciente: Defensa 1 es frágil a propósito.
+- Pendiente de decidir: crítico propio por personaje, tope de daño por impacto, y ajustar la vida (con este daño, la vida de 10 a 15 podría ser razonable).
 
 ### Parar (dado verde, Defensa) — reacción
 - Se usa **en el turno del rival**, cuando te atacan.
@@ -75,7 +80,7 @@ _Documento vivo. Se va completando paso a paso._
 ### Orden de resolución de un ataque
 1. El atacante gasta sus rojos y los muestra.
 2. El defensor puede gastar verdes; cada uno anula un rojo de valor igual o menor.
-3. Cada rojo no parado que **supere la Defensa** del objetivo causa 1 herida.
+3. Cada rojo no parado que **supere la Defensa** del objetivo causa su daño (margen + bono de arma).
 
 ## 8. Personajes
 
@@ -86,7 +91,7 @@ _Documento vivo. Se va completando paso a paso._
 - **Carga** (habilidad morada): requiere un **dado morado de 5 o 6**.
 - Se gastan el **morado**, **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
 - El recorrido puede ser cualquiera **sin retroceder**: ningún paso puede alejarle del objetivo.
-- La carga hace **doble daño**: cada rojo que impacta causa **2 heridas**.
+- La carga hace **doble daño**: el daño de cada rojo que impacta se **duplica**.
 - Los verdes del defensor **pueden parar** los rojos de una carga como en un ataque normal.
 
 ## 9. Mapa
