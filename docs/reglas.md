@@ -68,7 +68,7 @@ _Documento vivo. Se va completando paso a paso._
 - **Daño de cada dado que impacta = margen + bono de arma.**
   - **Margen** = valor del dado − Defensa del objetivo (con Defensa 3: un 4 hace 1, un 5 hace 2, un 6 hace 3).
   - **Bono de arma** = valor fijo propio de cada personaje, que **se suma a cada dado que impacta** (p. ej. espada +0, martillo +1).
-  - Valor del Guerrero: por definir (propuesta: +0).
+  - Bono de arma del Guerrero: **+2**.
 - Con d6: contra Defensa 1 impacta con 2+ (83%), Defensa 2 con 3+ (67%), Defensa 3 con 4+ (50%).
 - Decisión consciente: Defensa 1 es frágil a propósito.
 - Pendiente de decidir: crítico propio por personaje, tope de daño por impacto, y ajustar la vida (con este daño, la vida de 10 a 15 podría ser razonable).
@@ -87,9 +87,10 @@ _Documento vivo. Se va completando paso a paso._
 ### Guerrero
 - **Ataque 3 · Defensa 3 · Agilidad 1 · Especial 1**
 - Aporta a la bolsa: 4 rojos, 4 verdes, 2 amarillos, 2 morados (12 dados).
+- Arma: bono **+2** por dado que impacta. Movilidad fija: 2.
 - Vida: 10.
-- **Carga** (habilidad morada): requiere un **dado morado de 5 o 6**.
-- Se gastan el **morado**, **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
+- **Carga**: requiere un **dado amarillo de 5 o más** (interpretación por confirmar: sustituye al morado de 5-6 anterior).
+- Se gastan ese **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
 - El recorrido puede ser cualquiera **sin retroceder**: ningún paso puede alejarle del objetivo.
 - La carga hace **doble daño**: el daño de cada rojo que impacta se **duplica**.
 - Los verdes del defensor **pueden parar** los rojos de una carga como en un ataque normal.
