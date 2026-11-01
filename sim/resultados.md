@@ -218,3 +218,16 @@ Perseguir a los arqueros apenas cambia nada: los Guerreros hacen de muro, los ar
 | 1-3 flojo, 4-6 fuerte | movilidad 4 | arqueros | 3% (ronda 59) | 2,9 | 2,0 |
 
 Los flojos rápidos triplican o quintuplican las bajas de arqueros (de 0,02 a 0,06-0,15), pero siguen siendo pocas. El peso de la partida lo sigue llevando el ritmo del dado negro.
+
+## Nivel de puzle (`simular5.py`) — 300 partidas, máximo 40 rondas
+Mapa 10x10. Héroes abajo (sin Mago en la simulación). 8 enemigos colocados a mano: 6 flojos rápidos (2/1/1/1, vida 5, movilidad 4, ataque fijo 4) y 2 fuertes (3/2/1/1, vida 10, arma +1, movilidad 2, ataque fijo 5).
+Los enemigos no tiran dados y se activan cuando un héroe está a 7 casillas o menos. Se gana limpiando el nivel y con todos los héroes conscientes en la fila superior. El dado negro no genera enemigos: solo se cuentan los rellenos de la bolsa.
+
+| Grupo y robo | Ganan | Pierden | Rondas (mediana) | Rellenos de bolsa | Héroes inconscientes |
+|---|---|---|---|---|---|
+| 2G + 2A, robar 1-2 (adaptativo) | 99% | 1% | 9 | 1,0 | 0,7 |
+| 2G + 2A, robar siempre 2 | 99% | 1% | 9 | 1,0 | 0,7 |
+| 2G + 2A, robar siempre 1 | 19% | 81% | 14 | 0,1 | 3,6 |
+| 4G, robar 1-2 (adaptativo) | 85% | 15% | 12 | 1,1 | 1,7 |
+
+Observaciones: con estas reglas el nivel es fácil si se roban 2 dados por personaje; robar solo 1 deja sin potencia de fuego y casi siempre se pierde. El nivel dura ~9 rondas y gasta ~1 relleno de bolsa, así que un reloj de «2 rellenos» apenas aprieta; un reloj de 1 relleno sí lo haría.
