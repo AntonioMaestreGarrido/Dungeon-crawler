@@ -36,3 +36,22 @@ Una "ronda" = turno de Héroes + turno de Enemigos. Script: `simular.py`.
 5. Los resultados de C dependen mucho de la IA (gasta verdes para moverse), así que no son fiables.
 
 Limitaciones: la IA es simple (ataca siempre que puede, no guarda rojos para que crezcan, no se agrupa), así que los números son orientativos.
+
+## Enemigos más débiles (todas con paso básico de 1 casilla; 600-1000 partidas)
+Héroes: 4 Guerreros 3/3/1/1, vida 10 (40 de vida en total).
+
+| Enemigos | Héroes gana | Rondas (mediana; 10%–90%) | Héroes inconscientes | Vida de héroes al final |
+|---|---|---|---|---|
+| 4 iguales (3/3/1/1, vida 10) | 58% | 69 (45–128) | — | — |
+| 4 de 2/2/1/1, vida 10 | 100% | 30 (25–38) | 0,14 | 33 |
+| 4 de 2/2/1/1, vida 6 | 100% | 19 (15–23) | 0,01 | 36 |
+| 4 de 2/1/1/1, vida 5 | 100% | 11 (9–12) | 0,01 | 37 |
+| 6 de 2/2/1/1, vida 6 | 86% | 39 (28–64) | 1,2 | 21 |
+| 8 de 2/1/1/1, vida 5 | 83% | 28 (21–40) | 1,5 | 16 |
+| 8 de 2/2/1/1, vida 6 | 1% | 26 (19–38) | 4,0 | 0 |
+| 10 de 2/1/1/1, vida 5 | 0% | 20 (14–36) | 3,8 | 1 |
+
+Conclusiones:
+- Con 4 enemigos débiles los héroes ganan siempre y casi sin daño: la partida pierde tensión.
+- La fuerza de un bando depende sobre todo de **cuántos dados saca por turno** (2 por personaje vivo). Más enemigos = más dados, y eso pesa más que sus atributos.
+- La zona interesante está en **6-8 enemigos débiles**: los héroes ganan el 83-86% pero pierden más o menos la mitad de su vida y 1-2 personajes. Entre 6 y 8 enemigos de 2/2/1/1 el equilibrio cambia muy deprisa.

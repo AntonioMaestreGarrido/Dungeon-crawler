@@ -12,23 +12,24 @@ STATS = {"r": 3, "g": 3, "y": 1, "p": 1}
 
 
 class Unit:
-    def __init__(s, side, i, hp=10):
+    def __init__(s, side, i, hp=10, stats=None):
         s.side, s.i = side, i
         s.hp = hp
+        s.stats = dict(stats or STATS)
         s.x, s.y = 3 + i, (0 if side else 9)
         s.ko = False
         s.dice = {c: [] for c in COLS}
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
-        s.units = [Unit(sd, i, hp) for sd in (0, 1) for i in range(4)]
+        s.units = [Unit(0, i, hp) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
             for c in COLS:
-                s.bag[u.side] += [c] * (STATS[c] + 1)
+                s.bag[u.side] += [c] * (u.stats[c] + 1)
         s.disc = [[], []]
         s.blacks = [0, 0]
         st = Counter()
@@ -109,7 +110,7 @@ class Game:
                 s.st["negros_sacados"] += 1
                 s.disc[side].append(c)
                 continue
-            cand = [u for u in us if len(u.dice[c]) < STATS[c]]
+            cand = [u for u in us if len(u.dice[c]) < u.stats[c]]
             if not cand:
                 s.st["dados_perdidos"] += 1
                 s.disc[side].append(c)
@@ -125,7 +126,7 @@ class Game:
         reds = sorted(reds, reverse=True)
         s.st["ataques"] += 1
         s.st["cargas"] += charge
-        defense = STATS["g"]
+        defense = tgt.stats["g"]
         hits = 0
         for r in reds:
             if r <= defense:
@@ -235,6 +236,8 @@ def run(n, **kw):
         rounds.append(r)
         tot += g.st
         tot["negros"] += sum(g.blacks)
+        tot["heroes_ko"] += sum(1 for u in g.units if u.side == 0 and u.ko)
+        tot["vida_heroes"] += sum(u.hp for u in g.units if u.side == 0)
     rounds.sort()
     pct = lambda a, b: 100 * a / b if b else 0
     return {
@@ -249,6 +252,8 @@ def run(n, **kw):
         "dano_medio_por_ataque": round(tot["dano"] / max(1, tot["ataques"]), 2),
         "paradas_por_ataque": round(tot["paradas"] / max(1, tot["ataques"]), 2),
         "cargas_%_de_ataques": round(pct(tot["cargas"], tot["ataques"]), 1),
+        "heroes_inconscientes_media": round(tot["heroes_ko"] / n, 2),
+        "vida_heroes_restante_media": round(tot["vida_heroes"] / n, 1),
         "dados_negros_por_bando": round(tot["negros"] / n / 2, 1),
     }
 
