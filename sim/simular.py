@@ -22,12 +22,12 @@ class Unit:
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False, fixed_move_die=False, armor=0, armor_mode='umbral'):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False, fixed_move_die=False, armor=0, armor_mode='umbral', armor_both=False):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
         s.one_yellow = one_yellow
         s.fixed_move_die = fixed_move_die
-        s.armor, s.armor_mode = armor, armor_mode
+        s.armor, s.armor_mode, s.armor_both = armor, armor_mode, armor_both
         s.units = [Unit(0, i, hp, hero_stats) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
@@ -129,7 +129,7 @@ class Game:
         reds = sorted(reds, reverse=True)
         s.st["ataques"] += 1
         s.st["cargas"] += charge
-        arm = s.armor if tgt.side == 0 else 0
+        arm = s.armor if (tgt.side == 0 or s.armor_both) else 0
         defense = tgt.stats["g"] + (arm if s.armor_mode == "umbral" else 0)
         hits = 0
         for r in reds:

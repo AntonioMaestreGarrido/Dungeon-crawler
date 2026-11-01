@@ -106,3 +106,12 @@ Repartir los amarillos en el tiempo apenas ayuda: el límite es cuántos amarill
 | Reduce 1 por impacto (mínimo 1) | 97% | 36 | 27,7 | 0,5 |
 
 Con el daño actual (0,4 heridas por ataque), una armadura de 1 es muy fuerte: hay que dársela con cuentagotas.
+
+## Armadura en espejo (4 Guerreros 3/3/1/1 contra 4 iguales, movilidad fija 2 en ambos bandos, 800 partidas)
+Armadura 1 en **ambos** bandos, para valorar sin sesgo.
+| Variante | Héroes gana | Rondas (mediana; 10%–90%) | Sin terminar (200 rondas) |
+|---|---|---|---|
+| Sin armadura | 55% | 70 (45–135) | 2% |
+| Umbral (rojo debe superar Defensa + 1) | 38% | 153 (84–200) | 31% |
+| Reduce 1 por impacto (mínimo 1) | 46% | 113 (77–195) | 9% |
+| Absorbe 1 herida por ataque | 11% | 200 (174–200) | 81% |
