@@ -105,6 +105,13 @@ _Documento vivo. Se va completando paso a paso._
 - La carga hace **doble daño**: el daño de cada rojo que impacta se **duplica**.
 - Los verdes del defensor **pueden parar** los rojos de una carga como en un ataque normal.
 
+### Arquero (borrador)
+- **Ataque 1 · Defensa 1 · Agilidad 2 · Especial 3**; vida 8.
+- Aporta a la bolsa: 2 rojos, 2 verdes, 3 amarillos, 4 morados (11 dados). Movilidad fija: 3. Arma (arco): bono +1.
+- **Disparo** (habilidad morada): cada **dado morado** gastado **ataca como un rojo, pero a distancia**: impacta si su valor supera la Defensa del objetivo y hace **margen + bono de arma**.
+- Alcance (propuesta): enemigo en **línea recta ortogonal**, con la línea despejada, hasta **4 casillas**; con un enemigo adyacente también puede disparar.
+- Por confirmar: alcance, si necesita línea despejada, y si dispara con un enemigo adyacente.
+
 ## 9. Mapa
 - Tablero de **10x10** casillas.
 
