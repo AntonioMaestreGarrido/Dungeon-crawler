@@ -125,8 +125,8 @@ _Documento vivo. Se va completando paso a paso._
 - **Ataque 1 · Defensa 2 · Agilidad 1 · Especial 3**; vida 6.
 - Aporta a la bolsa: 2 rojos, 3 verdes, 2 amarillos, 4 morados (11 dados). Movilidad fija: 2. Arma (bastón): bono +0, **distancia 3**.
 - **Telequinesis** (habilidad morada): gasta un **dado morado** para **mover a un enemigo** situado a **3 casillas o menos** (puede estar adyacente), tantas casillas como el **valor del dado**, en pasos ortogonales y sin atravesar unidades.
-  - Sirve para **desviar las intenciones**: apartar a un enemigo, taparle el camino, o colocar a un enemigo en la casilla que otro va a atacar.
-  - Al ser movido, el enemigo **pierde su intención de movimiento**; su ataque conserva la casilla objetivo si sigue a su alcance y, si no, se cancela (por confirmar).
+  - Sirve para **desviar las intenciones**: apartar a un enemigo, taparle el camino, 
+  - Al ser movido, el enemigo **pierde su intención de movimiento** pero **conserva la dirección de su ataque**, que parte de su nueva casilla.
 - Por confirmar: si puede mover al enemigo menos casillas de las que marca el dado, y si puede mover a un aliado.
 
 ## 9. Mapa
@@ -137,8 +137,12 @@ _Documento vivo. Se va completando paso a paso._
 - **Antes de actuar, el jugador sabe lo que van a hacer los enemigos.** Al terminar el turno enemigo se **anuncian las intenciones** del siguiente: cada enemigo muestra a qué casilla se mueve y qué casilla ataca.
 - El jugador resuelve su turno **sabiendo** eso: puede eliminar a un enemigo antes de que actúe, bloquear su paso, apartarse o preparar paradas.
 - Los enemigos **no tiran dados**: atacan con **dados fijos** (valores conocidos), así que el daño y las paradas se pueden calcular de antemano.
-- La intención apunta a una **casilla**, no a un héroe: si el héroe se va, el golpe cae en el vacío (o en quien ocupe la casilla, aliados incluidos). Si el enemigo muere o queda sin camino, su intención se cancela.
-- Se muestran con **flechas de trayectoria** sobre el mapa: una flecha por el camino de movimiento y otra hacia la casilla atacada.
+- El ataque anunciado es una **dirección relativa al enemigo**, no un héroe concreto:
+  - **Golpe cuerpo a cuerpo:** hacia delante, a la casilla adyacente en esa dirección.
+  - **Disparo:** en esa dirección, a lo largo de la línea y hasta su distancia, e **impacta a la primera unidad** que encuentre (aliados incluidos).
+  - Si el héroe se aparta, el golpe cae en el vacío; si hay otra unidad (incluido otro enemigo), se la lleva.
+- Si el enemigo es **movido** (p. ej. por la Telequinesis del Mago), **pierde su intención de movimiento** pero **conserva la dirección del ataque**, que ahora parte de su **nueva casilla**. Si no, el ataque se cancela solo si el enemigo muere.
+- Se muestran con **flechas de trayectoria** sobre el mapa: una flecha por el camino de movimiento y otra con la dirección del golpe o disparo.
 - Por confirmar: conducta fija de cada tipo de enemigo (hacia quién se mueve y a quién ataca) y orden en que actúan.
 
 
