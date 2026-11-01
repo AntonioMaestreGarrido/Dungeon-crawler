@@ -2,6 +2,12 @@
 
 _Documento vivo. Se va completando paso a paso._
 
+## 0. Objetivo del juego
+- Es un **puzle**: se trata de resolver cada mazmorra con los dados que tocan y los mínimos recursos.
+- Los **enemigos son débiles y predecibles**.
+- Se gana **limpiando la mazmorra y saliendo de ella**.
+- Consecuencias a decidir: el dado negro deja de generar enemigos al azar, los enemigos pasan a tener dados fijos y comportamiento visible, y el reloj (rellenado de la bolsa) pasa a ser el límite de turnos del puzle. Pendiente de confirmar con Antonio.
+
 ## 1. Personajes
 - Cada personaje empieza con **10 puntos de vida** (en el futuro variarán según el personaje). El daño recibido quita puntos de vida.
 - Al llegar a **0** el personaje queda **inconsciente**.
