@@ -121,6 +121,14 @@ _Documento vivo. Se va completando paso a paso._
 - Alcance: su **valor de distancia (5)**: objetivos **a entre 2 y 5 casillas**, en cualquier dirección y nunca adyacentes (reglas de distancia, en Atacar).
 - Por confirmar: si aliados o enemigos intermedios bloquean el disparo.
 
+### Mago (borrador)
+- **Ataque 1 · Defensa 2 · Agilidad 1 · Especial 3**; vida 6.
+- Aporta a la bolsa: 2 rojos, 3 verdes, 2 amarillos, 4 morados (11 dados). Movilidad fija: 2. Arma (bastón): bono +0, **distancia 3**.
+- **Telequinesis** (habilidad morada): gasta un **dado morado** para **mover a un enemigo** situado a **3 casillas o menos** (puede estar adyacente), tantas casillas como el **valor del dado**, en pasos ortogonales y sin atravesar unidades.
+  - Sirve para **desviar las intenciones**: apartar a un enemigo, taparle el camino, o colocar a un enemigo en la casilla que otro va a atacar.
+  - Al ser movido, el enemigo **pierde su intención de movimiento**; su ataque conserva la casilla objetivo si sigue a su alcance y, si no, se cancela (por confirmar).
+- Por confirmar: si puede mover al enemigo menos casillas de las que marca el dado, y si puede mover a un aliado.
+
 ## 9. Mapa
 - Tablero de **10x10** casillas.
 
