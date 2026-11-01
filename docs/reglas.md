@@ -51,10 +51,10 @@ _Documento vivo. Se va completando paso a paso._
 - Cuando la bolsa se vacía, **se rellena solo con los dados gastados y perdidos** (los guardados en las hojas se quedan donde están).
 - En cada relleno se **añade un dado negro nuevo**: se van acumulando.
 - **Efecto del dado negro: aparece un enemigo.** Al sacarlo y tirarlo, su valor decide el tipo:
-  - **1-3: enemigo flojo.**
+  - **1-3: enemigo flojo y rápido** (movilidad 4).
   - **4-6: enemigo fuerte.**
 - El enemigo aparece en una **casilla libre del borde del mapa**.
-- Por confirmar: qué atributos tienen flojo y fuerte (borrador: flojo 2/1/1/1 vida 5, arma +0; fuerte 3/2/1/1 vida 10, arma +1), si actúa el turno en que aparece, y si el dado negro vuelve con el siguiente relleno y se acumula (ver simulación) o sale del juego.
+- Por confirmar: qué atributos tienen flojo y fuerte (borrador: flojo rápido 2/1/1/1 vida 5, arma +0, movilidad 4; fuerte 3/2/1/1 vida 10, arma +1, movilidad 2), si actúa el turno en que aparece, y si el dado negro vuelve con el siguiente relleno y se acumula (ver simulación) o sale del juego.
 
 ## 7. Acciones
 ### Mover (dado amarillo, Agilidad)
