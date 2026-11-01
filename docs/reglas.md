@@ -91,7 +91,9 @@ _Documento vivo. Se va completando paso a paso._
 - Vida: 10.
 - **Carga** (habilidad morada): requiere **a la vez** un **dado morado de 5 o 6** y un **dado amarillo de 5 o más**.
 - Se gastan el **morado**, el **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
+- El **amarillo** da el recorrido de la carga: tantas casillas como su valor (se pueden sumar más amarillos).
 - El recorrido puede ser cualquiera **sin retroceder**: ningún paso puede alejarle del objetivo.
+- Es una jugada **rara y fuerte** a propósito: exige guardar varios turnos un morado y un amarillo altos.
 - La carga hace **doble daño**: el daño de cada rojo que impacta se **duplica**.
 - Los verdes del defensor **pueden parar** los rojos de una carga como en un ataque normal.
 
