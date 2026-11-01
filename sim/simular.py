@@ -22,9 +22,10 @@ class Unit:
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
+        s.one_yellow = one_yellow
         s.units = [Unit(0, i, hp, hero_stats) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
@@ -173,6 +174,8 @@ class Game:
         adj = s.adjacent_enemies(u)
         if not adj:
             budget_dice = sorted(u.dice["y"])
+            if s.one_yellow and budget_dice:
+                budget_dice = [max(budget_dice)]  # solo un amarillo por turno: el más alto
             extra = list(u.dice["r"] + u.dice["g"]) if s.any_die_move else []
             free = s.free_step
             total = sum(budget_dice) + free + len(extra)

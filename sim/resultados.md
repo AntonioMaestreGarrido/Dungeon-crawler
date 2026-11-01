@@ -69,3 +69,14 @@ Conclusiones:
 
 Con Agilidad 2 salen ~1,8 amarillos por turno para 4 héroes: más slots dejan guardar, pero no crean más amarillos.
 Además diluyen la bolsa (menos rojos y verdes) y los héroes rinden peor contra 6 enemigos débiles.
+
+## Amarillos de uno en uno (máximo 1 amarillo por personaje y turno) — vs 6 de 2/2/1/1 vida 6, 800 partidas
+| Variante | Sin poder mover | Héroes gana | Rondas (mediana) |
+|---|---|---|---|
+| Agilidad 1, sin límite | 51,0% | 86% | 38 |
+| Agilidad 2, sin límite | 50,7% | 75% | 42 |
+| Agilidad 2, de uno en uno | 48,3% | 79% | 40 |
+| Agilidad 1 + paso básico | 7,9% | 86% | 39 |
+| Agilidad 2 de uno en uno + paso | 9,8% | 77% | 41 |
+
+Repartir los amarillos en el tiempo apenas ayuda: el límite es cuántos amarillos salen de la bolsa, no cómo se gastan.
