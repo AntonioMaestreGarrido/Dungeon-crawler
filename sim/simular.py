@@ -22,11 +22,12 @@ class Unit:
 
 
 class Game:
-    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False, fixed_move_die=False):
+    def __init__(s, free_step=0, any_die_move=False, rng=None, hp=10, strict_parry=False, foe_stats=None, foe_hp=None, foes=4, hero_stats=None, one_yellow=False, fixed_move_die=False, armor=0, armor_mode='umbral'):
         s.rng = rng or random.Random()
         s.free_step, s.any_die_move, s.strict_parry = free_step, any_die_move, strict_parry
         s.one_yellow = one_yellow
         s.fixed_move_die = fixed_move_die
+        s.armor, s.armor_mode = armor, armor_mode
         s.units = [Unit(0, i, hp, hero_stats) for i in range(4)] + [Unit(1, i, foe_hp or hp, foe_stats) for i in range(foes)]
         s.bag = [[], []]
         for u in s.units:
@@ -128,7 +129,8 @@ class Game:
         reds = sorted(reds, reverse=True)
         s.st["ataques"] += 1
         s.st["cargas"] += charge
-        defense = tgt.stats["g"]
+        arm = s.armor if tgt.side == 0 else 0
+        defense = tgt.stats["g"] + (arm if s.armor_mode == "umbral" else 0)
         hits = 0
         for r in reds:
             if r <= defense:
@@ -140,6 +142,10 @@ class Game:
                 continue
             hits += 1
         dmg = hits * (2 if charge else 1)
+        if s.armor_mode == "absorbe":
+            dmg = max(0, dmg - arm)
+        elif s.armor_mode == "reduce":
+            dmg = max(hits and 1, dmg - arm * hits) if hits else 0
         s.st["dano"] += dmg
         tgt.hp -= dmg
         if tgt.hp <= 0:

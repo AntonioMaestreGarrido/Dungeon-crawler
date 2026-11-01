@@ -96,3 +96,13 @@ Repartir los amarillos en el tiempo apenas ayuda: el límite es cuántos amarill
 | 2 | 6,5% | 81% | 41 |
 | 3 | 3,8% | 82% | 41 |
 | 4 | 1,7% | 86% | 39 |
+
+## Armadura de 1 solo en los héroes — vs 6 de 2/2/1/1 vida 6 (con dado de movilidad), 800 partidas
+| Tipo de armadura | Héroes gana | Rondas (mediana) | Vida de héroes al final | Héroes inconscientes |
+|---|---|---|---|---|
+| Sin armadura | 84% | 39 | 21,7 | 1,2 |
+| Umbral: el rojo debe superar Defensa + 1 | 100% | 34 | 33,0 | 0,15 |
+| Absorbe 1 herida por ataque | 100% | 34 | 37,2 | 0 |
+| Reduce 1 por impacto (mínimo 1) | 97% | 36 | 27,7 | 0,5 |
+
+Con el daño actual (0,4 heridas por ataque), una armadura de 1 es muy fuerte: hay que dársela con cuentagotas.
