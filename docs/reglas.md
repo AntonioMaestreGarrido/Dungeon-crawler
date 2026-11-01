@@ -28,7 +28,7 @@ _Documento vivo. Se va completando paso a paso._
 - Ejemplo: un personaje con Ataque 3, Defensa 2, Agilidad 1, Especial 2 aporta 3+1 rojos, 2+1 verdes, 1+1 amarillos y 2+1 morados = 12 dados.
 
 ## 5. Núcleo del juego: el turno
-1. **Sacar y tirar**: se sacan de la bolsa un número fijo de dados (de momento, **2 por personaje**, 8 en total) y se tiran.
+1. **Sacar y tirar**: al inicio del turno se sacan de la bolsa **entre 1 y 2 dados por personaje vivo** (a elegir por el jugador; mínimo 1 por personaje) y se tiran. Robar menos retrasa el rellenado de la bolsa y la llegada del dado negro.
 2. **Repartir**: se reparten entre los personajes, colocándolos con su valor en los slots de su color.
    - Un dado que no cabe en ningún slot libre **se pierde**: va a descartes junto con los gastados y vuelve a la bolsa en el siguiente relleno.
 3. **Acciones**: los dados acumulados se **gastan o se guardan** para hacer acciones.
