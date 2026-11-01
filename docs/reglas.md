@@ -44,6 +44,10 @@ _Documento vivo. Se va completando paso a paso._
 - Las habilidades concretas se definirán con cada personaje.
 
 ## 6. Rellenar la bolsa y el dado negro
+**Concepto clave: acumular frente a vaciar la bolsa.**
+- Guardar dados en las hojas **los hace crecer** (+1 por turno), pero **saca dados de la circulación**: la bolsa se vacía antes, se rellena antes y entra antes el siguiente dado negro (más enemigos).
+- Gastar los dados los devuelve a descartes y alarga el tiempo entre rellenos, pero se pierde su crecimiento.
+- El jugador decide en cada turno cuánto invierte en poder y cuánto en tiempo.
 - Cuando la bolsa se vacía, **se rellena solo con los dados gastados y perdidos** (los guardados en las hojas se quedan donde están).
 - En cada relleno se **añade un dado negro nuevo**: se van acumulando.
 - **Efecto del dado negro: aparece un enemigo.** Al sacarlo y tirarlo, su valor decide el tipo:
