@@ -71,7 +71,10 @@ _Documento vivo. Se va completando paso a paso._
 - **No** se puede atravesar a aliados ni a enemigos.
 
 ### Atacar (dado rojo, Ataque)
-- Se gastan uno o varios dados rojos contra un enemigo **adyacente** (ortogonal, como el movimiento; por confirmar si cuenta la diagonal).
+- Se gastan uno o varios dados rojos contra un enemigo a la **distancia** del arma del personaje (ver abajo).
+- **Valor de distancia** (propio de cada personaje/arma):
+  - **Distancia 1**: cuerpo a cuerpo, solo a un enemigo **adyacente** (ortogonal, como el movimiento; por confirmar si cuenta la diagonal).
+  - **Distancia N ≥ 2**: ataque a distancia, a un objetivo **a entre 2 y N casillas** (pasos ortogonales), **en cualquier dirección** y **nunca adyacente**.
 - Un dado rojo **impacta** si su valor **supera** la Defensa del objetivo.
 - **Daño de cada dado que impacta = margen + bono de arma.**
   - **Margen** = valor del dado − Defensa del objetivo (con Defensa 3: un 4 hace 1, un 5 hace 2, un 6 hace 3).
@@ -95,7 +98,7 @@ _Documento vivo. Se va completando paso a paso._
 ### Guerrero
 - **Ataque 3 · Defensa 3 · Agilidad 1 · Especial 1**
 - Aporta a la bolsa: 4 rojos, 4 verdes, 2 amarillos, 2 morados (12 dados).
-- Arma: bono **+2** por dado que impacta. Movilidad fija: 2.
+- Arma: bono **+2** por dado que impacta. Distancia **1** (cuerpo a cuerpo). Movilidad fija: 2.
 - Vida: 10.
 - **Carga** (habilidad morada): requiere **a la vez** un **dado morado de 5 o 6** y un **dado amarillo de 5 o más**.
 - Se gastan el **morado**, el **amarillo** (moverse) y **rojo** (atacar) para cargar contra un enemigo.
@@ -107,10 +110,9 @@ _Documento vivo. Se va completando paso a paso._
 
 ### Arquero (borrador)
 - **Ataque 1 · Defensa 1 · Agilidad 2 · Especial 3**; vida 8.
-- Aporta a la bolsa: 2 rojos, 2 verdes, 3 amarillos, 4 morados (11 dados). Movilidad fija: 3. Arma (arco): bono +1.
+- Aporta a la bolsa: 2 rojos, 2 verdes, 3 amarillos, 4 morados (11 dados). Movilidad fija: 3. Arma (arco): bono +1, **distancia 5** (propuesta).
 - **Disparo** (habilidad morada): cada **dado morado** gastado **ataca como un rojo, pero a distancia**: impacta si su valor supera la Defensa del objetivo y hace **margen + bono de arma**.
-- Alcance: **en cualquier dirección** (no hace falta línea recta) y **nunca a un enemigo adyacente**: el objetivo debe estar al menos a 2 casillas.
-- Distancia máxima (por confirmar): el **valor del dado morado** (casillas contadas en pasos ortogonales, como el movimiento).
+- Alcance: su **valor de distancia (5)**: objetivos **a entre 2 y 5 casillas**, en cualquier dirección y nunca adyacentes (reglas de distancia, en Atacar).
 - Por confirmar: si aliados o enemigos intermedios bloquean el disparo.
 
 ## 9. Mapa
