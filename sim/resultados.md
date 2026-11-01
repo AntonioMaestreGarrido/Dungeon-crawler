@@ -135,3 +135,21 @@ Armadura 1 vale más que cualquier otro cambio probado: un personaje con armadur
 | Margen | 20 | 0,70 | 66 (45–123) | 54% |
 
 Armadura 1 solo en los héroes con daño = margen y vida 15: los héroes ganan el 99,5% (sin armadura, 58,5%). La armadura sigue siendo muy dominante.
+
+## Reglas de noviembre (daño = margen + arma, movilidad fija 2, carga con morado 5+ y amarillo 5+, el dado negro hace aparecer un enemigo)
+Script: `simular2.py`. 300 partidas, 80 rondas como máximo, 4 héroes (3/3/1/1, arma +2) contra 4 enemigos flojos iniciales.
+Flojo: 2/1/1/1, vida 5, arma +0 (1-3). Fuerte: 3/2/1/1, vida 10, arma +1 (4-6). Aparecen en el borde del mapa y actúan en el siguiente turno enemigo.
+Solo la bolsa de los héroes recibe dados negros.
+
+| Variante | Héroes sobreviven | Ronda en que caen (mediana) | Enemigos aparecidos | Derrotados |
+|---|---|---|---|---|
+| Los negros vuelven y se acumulan, vida 10 | 0% | 37 | 33 | 25 |
+| Los negros vuelven y se acumulan, vida 15 | 0% | 38 | 35 | 24 |
+| Los negros vuelven y se acumulan, vida 20 | 0% | 40 | 37 | 25 |
+| El negro sale del juego al usarse, vida 10 | 100% | — | 35 | 39 |
+| El negro sale del juego al usarse, vida 15 | 100% | — | 35 | 39 |
+
+Observaciones:
+- La IA acumula dados en las hojas (hasta 32 de los 48), así que solo circulan unos 16 y **la bolsa se rellena cada ~2 rondas**. Cada relleno añade un negro: aparece un enemigo cada ~2 rondas, y si los negros vuelven y se acumulan, el ritmo sube sin parar.
+- Con el daño actual (margen + arma +2, ×2 en carga) un enemigo flojo (vida 5) muere de un golpe: el daño medio por ataque es 6 y las cargas son frecuentes (~9 por partida).
+- Hay un punto medio sin probar: por ejemplo, un máximo de negros en la bolsa.

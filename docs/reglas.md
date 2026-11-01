@@ -49,7 +49,8 @@ _Documento vivo. Se va completando paso a paso._
 - **Efecto del dado negro: aparece un enemigo.** Al sacarlo y tirarlo, su valor decide el tipo:
   - **1-3: enemigo flojo.**
   - **4-6: enemigo fuerte.**
-- Por confirmar: dónde aparece el enemigo, qué valores tienen flojo y fuerte, y si el dado negro se descarta y vuelve con el siguiente relleno como los demás.
+- El enemigo aparece en una **casilla libre del borde del mapa**.
+- Por confirmar: qué atributos tienen flojo y fuerte (borrador: flojo 2/1/1/1 vida 5, arma +0; fuerte 3/2/1/1 vida 10, arma +1), si actúa el turno en que aparece, y si el dado negro vuelve con el siguiente relleno y se acumula (ver simulación) o sale del juego.
 
 ## 7. Acciones
 ### Mover (dado amarillo, Agilidad)
@@ -108,7 +109,7 @@ _Documento vivo. Se va completando paso a paso._
 - Usan **su propia bolsa** de dados, construida igual que la del jugador.
 
 ## Preguntas abiertas
-- Dado negro: ¿dónde aparece el enemigo (borde del mapa, casilla al azar, cerca de un héroe)? ¿Qué atributos y vida tienen flojo y fuerte? ¿Actúa el turno en que aparece?
+- Dado negro: ¿qué atributos y vida tienen flojo y fuerte? ¿Actúa el turno en que aparece? ¿Se acumulan o salen del juego?
 - ¿Qué personajes hay y qué hace el morado de cada uno?
 - Inconsciente: ¿qué pasa con sus dados guardados? ¿Se puede reanimar? ¿Ocupa casilla? ¿Cuándo se pierde la partida?
 - ¿Cómo se alternan los turnos entre jugador y enemigos?

@@ -1,0 +1,168 @@
+"""Simulador con las reglas de noviembre: daño = margen + arma, dado de movilidad fijo,
+carga con morado 5+ y amarillo 5+, y el dado negro hace aparecer enemigos.
+Uso: python3 sim/simular2.py [partidas]
+Supuestos: los dados negros solo entran en la bolsa de los héroes; el enemigo aparece en una
+casilla libre del borde del mapa y actúa en el siguiente turno enemigo; la partida sigue aunque
+no queden enemigos (llegarán más) y dura como máximo `max_rounds` rondas.
+"""
+import random, sys
+from collections import Counter
+import simular as base
+from simular import Game, Unit, COLS
+
+FLOJO = ({"r": 2, "g": 1, "y": 1, "p": 1}, 5, 0)    # atributos, vida, bono de arma
+FUERTE = ({"r": 3, "g": 2, "y": 1, "p": 1}, 10, 1)
+HEROE = ({"r": 3, "g": 3, "y": 1, "p": 1}, 10, 2)
+
+
+class Game2(Game):
+    def __init__(s, hero_hp=10, foes0=4, foe0=FLOJO, rng=None, black_returns=True):
+        super().__init__(free_step=2, rng=rng, hp=hero_hp, dmg_mode="margen", foes=0)
+        s.units = []
+        for i in range(4):
+            u = Unit(0, i, hero_hp, HEROE[0]); u.weapon = HEROE[2]; s.units.append(u)
+        s.bag = [[], []]
+        for u in s.units:
+            for c in COLS:
+                s.bag[0] += [c] * (u.stats[c] + 1)
+        s.disc = [[], []]
+        s.black_returns = black_returns
+        s.spawned = 0
+        s.kills = 0
+        for _ in range(foes0):
+            s.spawn_unit(*foe0)
+
+    def spawn_unit(s, stats, hp, weapon):
+        used = s.occ()
+        n = base.N
+        cells = [(x, y) for x in range(n) for y in range(n)
+                 if (x in (0, n - 1) or y in (0, n - 1)) and (x, y) not in used]
+        if not cells:
+            return
+        x, y = s.rng.choice(cells)
+        u = Unit(1, len([v for v in s.units if v.side == 1]), hp, stats)
+        u.weapon, u.x, u.y = weapon, x, y
+        s.units.append(u)
+        for c in COLS:
+            s.bag[1] += [c] * (u.stats[c] + 1)
+
+    def draw(s, side):
+        out = []
+        for _ in range(2 * len(s.alive(side))):
+            if not s.bag[side]:
+                if not s.disc[side]:
+                    break
+                s.bag[side], s.disc[side] = s.disc[side], []
+                if side == 0:
+                    s.bag[0].append("k"); s.blacks[0] += 1
+            c = s.bag[side].pop(s.rng.randrange(len(s.bag[side])))
+            out.append((c, s.rng.randint(1, 6)))
+        return out
+
+    def place(s, side, pool):
+        rest = []
+        for c, v in pool:
+            if c == "k":
+                if s.black_returns:
+                    s.disc[side].append("k")
+                s.spawned += 1
+                s.spawn_unit(*(FLOJO if v <= 3 else FUERTE))
+            else:
+                rest.append((c, v))
+        super().place(side, rest)
+
+    def attack(s, att, tgt, reds, charge):
+        reds = sorted(reds, reverse=True)
+        s.st["ataques"] += 1
+        defense = tgt.stats["g"]
+        dmg = 0
+        for r in reds:
+            if r <= defense:
+                continue
+            greens = sorted(v for v in tgt.dice["g"] if v >= r)
+            if greens:
+                s.spend(tgt, "g", [greens[0]]); s.st["paradas"] += 1
+                continue
+            dmg += (r - defense) + att.weapon
+        dmg *= 2 if charge else 1
+        s.st["cargas"] += charge
+        s.st["dano"] += dmg
+        tgt.hp -= dmg
+        if tgt.hp <= 0:
+            tgt.hp, tgt.ko = 0, True
+            tgt.x = tgt.y = -9
+            if tgt.side == 1:
+                s.kills += 1
+
+    def act(s, u):
+        if u.ko:
+            return
+        # carga: morado 5+ y amarillo 5+
+        if (u.dice["p"] and max(u.dice["p"]) >= 5 and u.dice["y"] and max(u.dice["y"]) >= 5
+                and u.dice["r"] and not s.adjacent_enemies(u)):
+            top = max(u.dice["y"])
+            budget = top + sum(v for v in u.dice["y"]) - top + s.free_step
+            best = None
+            for e in s.alive(1 - u.side):
+                seen = s.bfs(u, budget, (e.x, e.y))
+                for p, k in seen.items():
+                    if k > 0 and s.dist(p, (e.x, e.y)) == 1 and (best is None or k < best[0]):
+                        best = (k, p, e)
+            if best:
+                k, p, e = best
+                s.spend(u, "y", [top])
+                need = k - top - s.free_step
+                if need > 0:
+                    s.spend(u, "y", s.pick_sum(list(u.dice["y"]), need) or list(u.dice["y"]))
+                s.spend(u, "p", [max(u.dice["p"])])
+                u.x, u.y = p
+                reds = list(u.dice["r"]); s.spend(u, "r", reds)
+                s.attack(u, e, reds, True)
+                return
+        super().act(u)
+
+    def play(s, max_rounds=80):
+        for rnd in range(1, max_rounds + 1):
+            for side in (0, 1):
+                s.turn(side)
+                if not s.alive(0):
+                    return 1, rnd
+        return None, max_rounds
+
+
+def run(n, **kw):
+    out = Counter(); fall = []; tot = Counter()
+    for i in range(n):
+        g = Game2(rng=random.Random(i), **kw)
+        w, r = g.play()
+        out["caen" if w == 1 else "sobreviven"] += 1
+        if w == 1:
+            fall.append(r)
+        tot["aparecidos"] += g.spawned
+        tot["bajas"] += g.kills
+        tot["vida"] += sum(u.hp for u in g.units if u.side == 0)
+        tot["heroes_ko"] += sum(1 for u in g.units if u.side == 0 and u.ko)
+        tot["dano"] += g.st["dano"]; tot["ataques"] += g.st["ataques"]; tot["cargas"] += g.st["cargas"]
+        tot["alive_enemy"] += len(g.alive(1))
+    fall.sort()
+    return {
+        "heroes_sobreviven_%": round(100 * out["sobreviven"] / n, 1),
+        "ronda_en_que_caen_mediana": fall[len(fall) // 2] if fall else "-",
+        "enemigos_aparecidos": round(tot["aparecidos"] / n, 1),
+        "enemigos_derrotados": round(tot["bajas"] / n, 1),
+        "enemigos_vivos_al_final": round(tot["alive_enemy"] / n, 1),
+        "heroes_inconscientes": round(tot["heroes_ko"] / n, 2),
+        "dano_por_ataque": round(tot["dano"] / max(1, tot["ataques"]), 2),
+        "cargas_por_partida": round(tot["cargas"] / n, 2),
+    }
+
+
+if __name__ == "__main__":
+    n = int(sys.argv[1]) if len(sys.argv) > 1 else 300
+    for name, kw in [("Reglas actuales: los negros vuelven y se acumulan, vida 15", dict(hero_hp=15)),
+                     ("Reglas actuales, vida 20", dict(hero_hp=20)),
+                     ("Alternativa: el negro sale del juego al usarse (+1 por vuelta), vida 15", dict(hero_hp=15, black_returns=False)),
+                     ("Alternativa: el negro sale del juego, vida 10", dict(hero_hp=10, black_returns=False))]:
+        print(f"\n== {name} ({n} partidas, 80 rondas) ==")
+        for k, v in run(n, **kw).items():
+            print(f"  {k}: {v}")
